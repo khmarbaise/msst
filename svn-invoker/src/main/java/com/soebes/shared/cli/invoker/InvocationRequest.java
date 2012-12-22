@@ -36,6 +36,7 @@ public interface InvocationRequest {
 	 * The possible Subversion commands
 	 */
 	public enum SVNCommands {
+		none,
 		checkout,
 		checkin,
 		merge,
@@ -67,6 +68,7 @@ public interface InvocationRequest {
 	 *         <code>false</code> otherwise.
 	 */
 	boolean isRecursive();
+	InvocationRequest setRecursive(boolean recursive);
 
 	String getUsername();
 	InvocationRequest setUsername(String username);

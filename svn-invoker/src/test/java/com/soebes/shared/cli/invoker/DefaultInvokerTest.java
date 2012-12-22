@@ -19,32 +19,23 @@ package com.soebes.shared.cli.invoker;
  * under the License.
  */
 
+import static org.fest.assertions.Assertions.assertThat;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
-
-import junit.framework.TestCase;
 
 import org.codehaus.plexus.util.StringUtils;
 import org.codehaus.plexus.util.cli.CommandLineUtils;
+import org.testng.annotations.Test;
 
-import com.soebes.shared.cli.invoker.DefaultInvocationRequest;
-import com.soebes.shared.cli.invoker.DefaultInvoker;
-import com.soebes.shared.cli.invoker.InvocationRequest;
-import com.soebes.shared.cli.invoker.InvocationResult;
-import com.soebes.shared.cli.invoker.Invoker;
-import com.soebes.shared.cli.invoker.InvokerLogger;
-import com.soebes.shared.cli.invoker.MavenInvocationException;
-import com.soebes.shared.cli.invoker.SystemOutLogger;
 import com.soebes.shared.cli.invoker.InvocationRequest.SVNCommands;
 
-public class DefaultInvokerTest extends TestCase {
+public class DefaultInvokerTest {
 
+	@Test
 	public void testBuildShouldSucceed() throws IOException,
 			MavenInvocationException, URISyntaxException {
 		File basedir = getBasedirForBuild();
@@ -54,152 +45,30 @@ public class DefaultInvokerTest extends TestCase {
 		InvocationRequest request = new DefaultInvocationRequest();
 		request.setBaseDirectory(basedir);
 
-		request.setCommand(SVNCommands.list);
+		request.setCommand(SVNCommands.none);
+		request.setShowVersion(true);
 
 //		List<String> goals = new ArrayList<String>();
 //		goals.add("clean");
 //		goals.add("package");
 
-		request.setGoals(goals);
+//		request.setGoals(goals);
 
 		InvocationResult result = invoker.execute(request);
 
-		assertEquals(0, result.getExitCode());
-	}
-
-	public void testBuildShouldFail() throws IOException,
-			MavenInvocationException, URISyntaxException {
-		File basedir = getBasedirForBuild();
-
-		Invoker invoker = newInvoker();
-
-		InvocationRequest request = new DefaultInvocationRequest();
-		request.setBaseDirectory(basedir);
-
-		request.setDebug(true);
-
-		List<String> goals = new ArrayList<String>();
-		goals.add("clean");
-		goals.add("package");
-
-		request.setGoals(goals);
-
-		InvocationResult result = invoker.execute(request);
-
-		assertEquals(1, result.getExitCode());
-	}
-
-	public void testSpacePom() throws Exception {
-		logTestStart();
-
-		File basedir = getBasedirForBuild();
-
-		Invoker invoker = newInvoker();
-
-		InvocationRequest request = new DefaultInvocationRequest();
-		request.setBaseDirectory(basedir);
-
-		request.setPomFileName("pom with spaces.xml");
-
-		request.setDebug(true);
-
-		List<String> goals = new ArrayList<String>();
-		goals.add("clean");
-
-		request.setGoals(goals);
-
-		InvocationResult result = invoker.execute(request);
-
-		assertEquals(0, result.getExitCode());
-	}
-
-	public void testSpaceSettings() throws Exception {
-		logTestStart();
-
-		File basedir = getBasedirForBuild();
-
-		Invoker invoker = newInvoker();
-
-		InvocationRequest request = new DefaultInvocationRequest();
-		request.setBaseDirectory(basedir);
-
-		request.setUserSettingsFile(new File(basedir,
-				"settings with spaces.xml"));
-
-		request.setDebug(true);
-
-		List<String> goals = new ArrayList<String>();
-		goals.add("validate");
-
-		request.setGoals(goals);
-
-		InvocationResult result = invoker.execute(request);
-
-		assertEquals(0, result.getExitCode());
-	}
-
-	public void testSpaceLocalRepo() throws Exception {
-		logTestStart();
-
-		File basedir = getBasedirForBuild();
-
-		Invoker invoker = newInvoker();
-
-		InvocationRequest request = new DefaultInvocationRequest();
-		request.setBaseDirectory(basedir);
-
-		request.setLocalRepositoryDirectory(new File(basedir,
-				"repo with spaces"));
-
-		request.setDebug(true);
-
-		List<String> goals = new ArrayList<String>();
-		goals.add("validate");
-
-		request.setGoals(goals);
-
-		InvocationResult result = invoker.execute(request);
-
-		assertEquals(0, result.getExitCode());
-	}
-
-	public void testSpaceProperties() throws Exception {
-		logTestStart();
-
-		File basedir = getBasedirForBuild();
-
-		Invoker invoker = newInvoker();
-
-		InvocationRequest request = new DefaultInvocationRequest();
-		request.setBaseDirectory(basedir);
-
-		Properties props = new Properties();
-		props.setProperty("key", "value with spaces");
-		props.setProperty("key with spaces", "value");
-		request.setProperties(props);
-
-		request.setDebug(true);
-
-		List<String> goals = new ArrayList<String>();
-		goals.add("validate");
-
-		request.setGoals(goals);
-
-		InvocationResult result = invoker.execute(request);
-
-		assertEquals(0, result.getExitCode());
+		assertThat(result.getExitCode()).isEqualTo(0);
 	}
 
 	private Invoker newInvoker() throws IOException {
 		Invoker invoker = new DefaultInvoker();
 
-		invoker.setMavenHome(findMavenHome());
+//		invoker.setMavenHome(findMavenHome());
 
 		InvokerLogger logger = new SystemOutLogger();
 		logger.setThreshold(InvokerLogger.DEBUG);
 		invoker.setLogger(logger);
 
-		invoker.setLocalRepositoryDirectory(findLocalRepo());
+//		invoker.setLocalRepositoryDirectory(findLocalRepo());
 
 		return invoker;
 	}

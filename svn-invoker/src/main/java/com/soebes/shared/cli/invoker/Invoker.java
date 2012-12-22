@@ -23,9 +23,8 @@ import java.io.File;
 import java.io.InputStream;
 
 /**
- * Provides a facade to invoke Maven.
+ * Provides a facade to invoke Subversion.
  * 
- * @version $Id: Invoker.java 1395172 2012-10-06 21:15:33Z rfscholte $
  */
 public interface Invoker {
 

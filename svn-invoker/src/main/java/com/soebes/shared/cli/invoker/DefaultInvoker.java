@@ -28,8 +28,8 @@ import org.codehaus.plexus.util.cli.CommandLineUtils;
 import org.codehaus.plexus.util.cli.Commandline;
 
 /**
- * Class intended to be used by clients who wish to invoke a forked Maven
- * process from their applications
+ * Class intended to be used by clients who wish to invoke a forked SVN process
+ * from their applications
  * 
  * @author jdcasey
  */
@@ -60,27 +60,16 @@ public class DefaultInvoker implements Invoker {
 
 	public InvocationResult execute(InvocationRequest request)
 			throws MavenInvocationException {
-		MavenCommandLineBuilder cliBuilder = new MavenCommandLineBuilder();
+		SubversionCommandLineBuilder cliBuilder = new SubversionCommandLineBuilder();
 
 		InvokerLogger logger = getLogger();
 		if (logger != null) {
 			cliBuilder.setLogger(getLogger());
 		}
 
-		File localRepo = getLocalRepositoryDirectory();
-		if (localRepo != null) {
-			cliBuilder
-					.setLocalRepositoryDirectory(getLocalRepositoryDirectory());
-		}
-
-		File mavenHome = getMavenHome();
-		if (mavenHome != null) {
-			cliBuilder.setMavenHome(getMavenHome());
-		}
-
 		File mavenExecutable = getMavenExecutable();
 		if (mavenExecutable != null) {
-			cliBuilder.setMavenExecutable(mavenExecutable);
+			cliBuilder.setSubversionExecutable(mavenExecutable);
 		}
 
 		File workingDirectory = getWorkingDirectory();
@@ -110,39 +99,32 @@ public class DefaultInvoker implements Invoker {
 		return result;
 	}
 
-	private int executeCommandLine(Commandline cli, InvocationRequest request)
-			throws CommandLineException {
+	private int executeCommandLine(Commandline cli, InvocationRequest request) throws CommandLineException {
 		int result = Integer.MIN_VALUE;
 
 		InputStream inputStream = request.getInputStream(this.inputStream);
-		InvocationOutputHandler outputHandler = request
-				.getOutputHandler(this.outputHandler);
-		InvocationOutputHandler errorHandler = request
-				.getErrorHandler(this.errorHandler);
+		InvocationOutputHandler outputHandler = request.getOutputHandler(this.outputHandler);
+		InvocationOutputHandler errorHandler = request.getErrorHandler(this.errorHandler);
 
 		if (getLogger().isDebugEnabled()) {
 			getLogger().debug("Executing: " + cli);
 		}
-		if (request.isInteractive()) {
+		if (!request.isNonInteractive()) {
 			if (inputStream == null) {
 				getLogger()
-						.warn("Maven will be executed in interactive mode"
+						.warn("Subversion will be executed in interactive mode"
 								+ ", but no input stream has been configured for this MavenInvoker instance.");
 
-				result = CommandLineUtils.executeCommandLine(cli,
-						outputHandler, errorHandler);
+				result = CommandLineUtils.executeCommandLine(cli, outputHandler, errorHandler);
 			} else {
-				result = CommandLineUtils.executeCommandLine(cli, inputStream,
-						outputHandler, errorHandler);
+				result = CommandLineUtils.executeCommandLine(cli, inputStream, outputHandler, errorHandler);
 			}
 		} else {
 			if (inputStream != null) {
-				getLogger()
-						.info("Executing in batch mode. The configured input stream will be ignored.");
+				getLogger().info("Executing in batch mode. The configured input stream will be ignored.");
 			}
 
-			result = CommandLineUtils.executeCommandLine(cli, outputHandler,
-					errorHandler);
+			result = CommandLineUtils.executeCommandLine(cli, outputHandler, errorHandler);
 		}
 
 		return result;

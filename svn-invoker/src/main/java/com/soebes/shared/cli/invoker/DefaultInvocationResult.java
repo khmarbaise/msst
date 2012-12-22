@@ -22,21 +22,19 @@ package com.soebes.shared.cli.invoker;
 import org.codehaus.plexus.util.cli.CommandLineException;
 
 /**
- * Describes the result of a Maven invocation.
+ * Describes the result of a Subversion invocation.
  * 
- * @version $Id: DefaultInvocationResult.java 1401842 2012-10-24 19:49:47Z
- *          rfscholte $
  */
 public final class DefaultInvocationResult implements InvocationResult {
 
 	/**
 	 * The exception that prevented to execute the command line, will be
-	 * <code>null</code> if Maven could be successfully started.
+	 * <code>null</code> if Subversion could be successfully started.
 	 */
 	private CommandLineException executionException;
 
 	/**
-	 * The exit code reported by the Maven invocation.
+	 * The exit code reported by the Subversion invocation.
 	 */
 	private int exitCode = Integer.MIN_VALUE;
 
@@ -56,10 +54,10 @@ public final class DefaultInvocationResult implements InvocationResult {
 	}
 
 	/**
-	 * Sets the exit code reported by the Maven invocation.
+	 * Sets the exit code reported by the SVN invocation.
 	 * 
 	 * @param exitCode
-	 *            The exit code reported by the Maven invocation.
+	 *            The exit code reported by the SVN invocation.
 	 */
 	void setExitCode(int exitCode) {
 		this.exitCode = exitCode;
