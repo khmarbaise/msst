@@ -21,9 +21,7 @@ package com.soebes.shared.cli.invoker;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Properties;
 
-import org.codehaus.plexus.util.cli.CommandLineUtils;
 import org.codehaus.plexus.util.cli.Commandline;
 
 import com.soebes.shared.cli.invoker.InvocationRequest.SVNCommands;
@@ -38,11 +36,7 @@ public class SubversionCommandLineBuilder {
 
 	private File workingDirectory;
 
-	private File svnHome;
-
 	private File svnExecutable;
-
-	private Properties systemEnvVars;
 
 	public Commandline build(InvocationRequest request)
 			throws CommandLineConfigurationException {
@@ -152,32 +146,6 @@ public class SubversionCommandLineBuilder {
 			}
 		}
 		return fullyQualifiedExecutable;
-	}
-
-	/**
-	 * Wraps a path with quotes to handle paths with spaces. If no spaces are
-	 * found, the original string is returned.
-	 * 
-	 * @param path
-	 *            string to wrap if containing spaces
-	 * @return quote wrapped string
-	 * @deprecated Quoting of command line arguments should be left to the
-	 *             Commandline from plexus-utils.
-	 */
-	public String wrapStringWithQuotes(String path) {
-		if (path.indexOf(" ") > -1) {
-			return "\"" + path + "\"";
-		} else {
-			return path;
-		}
-	}
-
-	private Properties getSystemEnvVars() throws IOException {
-		if (this.systemEnvVars == null) {
-			// with 1.5 replace with System.getenv()
-			this.systemEnvVars = CommandLineUtils.getSystemEnvVars();
-		}
-		return this.systemEnvVars;
 	}
 
 	public InvokerLogger getLogger() {

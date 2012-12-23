@@ -42,15 +42,11 @@ public class DefaultInvoker implements Invoker {
 
 	private static final InvocationOutputHandler DEFAULT_OUTPUT_HANDLER = new SystemOutHandler();
 
-	private File localRepositoryDirectory;
-
 	private InvokerLogger logger = DEFAULT_LOGGER;
 
 	private File workingDirectory;
 
 	private File mavenHome;
-
-	private File mavenExecutable;
 
 	private InvocationOutputHandler outputHandler = DEFAULT_OUTPUT_HANDLER;
 
@@ -67,10 +63,10 @@ public class DefaultInvoker implements Invoker {
 			cliBuilder.setLogger(getLogger());
 		}
 
-		File mavenExecutable = getMavenExecutable();
-		if (mavenExecutable != null) {
-			cliBuilder.setSubversionExecutable(mavenExecutable);
-		}
+//		File mavenExecutable = getMavenExecutable();
+//		if (mavenExecutable != null) {
+//			cliBuilder.setSubversionExecutable(mavenExecutable);
+//		}
 
 		File workingDirectory = getWorkingDirectory();
 		if (workingDirectory != null) {
@@ -113,7 +109,7 @@ public class DefaultInvoker implements Invoker {
 			if (inputStream == null) {
 				getLogger()
 						.warn("Subversion will be executed in interactive mode"
-								+ ", but no input stream has been configured for this MavenInvoker instance.");
+								+ ", but no input stream has been configured for this SVNInvoker instance.");
 
 				result = CommandLineUtils.executeCommandLine(cli, outputHandler, errorHandler);
 			} else {
@@ -130,17 +126,8 @@ public class DefaultInvoker implements Invoker {
 		return result;
 	}
 
-	public File getLocalRepositoryDirectory() {
-		return localRepositoryDirectory;
-	}
-
 	public InvokerLogger getLogger() {
 		return logger;
-	}
-
-	public Invoker setLocalRepositoryDirectory(File localRepositoryDirectory) {
-		this.localRepositoryDirectory = localRepositoryDirectory;
-		return this;
 	}
 
 	public Invoker setLogger(InvokerLogger logger) {
@@ -164,15 +151,6 @@ public class DefaultInvoker implements Invoker {
 	public Invoker setMavenHome(File mavenHome) {
 		this.mavenHome = mavenHome;
 
-		return this;
-	}
-
-	public File getMavenExecutable() {
-		return mavenExecutable;
-	}
-
-	public Invoker setMavenExecutable(File mavenExecutable) {
-		this.mavenExecutable = mavenExecutable;
 		return this;
 	}
 

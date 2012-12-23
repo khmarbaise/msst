@@ -57,16 +57,6 @@ public interface Invoker {
 			throws MavenInvocationException;
 
 	/**
-	 * Gets the path to the base directory of the local repository to use for
-	 * the Maven invocation.
-	 * 
-	 * @return The path to the base directory of the local repository or
-	 *         <code>null</code> to use the location from the
-	 *         <code>settings.xml</code>.
-	 */
-	File getLocalRepositoryDirectory();
-
-	/**
 	 * Gets the working directory for the Maven invocation.
 	 * 
 	 * @return The working directory for the Maven invocation or
@@ -105,35 +95,6 @@ public interface Invoker {
 	 * @return This invoker instance.
 	 */
 	Invoker setMavenHome(File mavenHome);
-
-	/**
-	 * Get the customized File of the Maven executable.
-	 * 
-	 * @return the custom Maven executable, otherwise {@code null}
-	 */
-	File getMavenExecutable();
-
-	/**
-	 * {@code mavenExecutable} can either be a file relative to
-	 * ${maven.home}/bin/ or an absolute file.
-	 * 
-	 * @param mavenExecutable
-	 *            the executable
-	 * @return This invoker instance
-	 */
-	Invoker setMavenExecutable(File mavenExecutable);
-
-	/**
-	 * Sets the path to the base directory of the local repository to use for
-	 * the Maven invocation.
-	 * 
-	 * @param localRepositoryDirectory
-	 *            The path to the base directory of the local repository or
-	 *            <code>null</code> to use the location from the
-	 *            <code>settings.xml</code>.
-	 * @return This invoker instance.
-	 */
-	Invoker setLocalRepositoryDirectory(File localRepositoryDirectory);
 
 	/**
 	 * Sets the logger used by this invoker to output diagnostic messages.
