@@ -33,6 +33,8 @@ Simpler Usage on a "application" level.
 
   msst branching --branch BRANCH-NAME --branch-version=2.3-SNAPSHOT repo/module repo/module etc.
 
+  msst branching --branch BRANCH-NAME --branch-version=2.3-SNAPSHOT @repository-module.lst
+
 
 Execution Block for a single module must be repeated for every module:
 
