@@ -22,30 +22,30 @@ package com.soebes.shared.cli.invoker;
 import org.codehaus.plexus.util.cli.CommandLineException;
 
 /**
- * Describes the result of a Maven invocation.
+ * Describes the result of a Subversion invocation.
  * 
  * @author jdcasey
  * @version $Id: InvocationResult.java 1401842 2012-10-24 19:49:47Z rfscholte $
  */
 public interface InvocationResult {
 
-	/**
-	 * Gets the exception that possibly occurred during the execution of the
-	 * command line.
-	 * 
-	 * @return The exception that prevented to invoke Maven or <code>null</code>
-	 *         if the command line was successfully processed by the operating
-	 *         system.
-	 */
-	CommandLineException getExecutionException();
+    /**
+     * Gets the exception that possibly occurred during the execution of the
+     * command line.
+     * 
+     * @return The exception that prevented to invoke Subversion or
+     *         <code>null</code> if the command line was successfully processed
+     *         by the operating system.
+     */
+    CommandLineException getExecutionException();
 
-	/**
-	 * Gets the exit code from the Maven invocation. A non-zero value indicates
-	 * a build failure. <strong>Note:</strong> This value is undefined if
-	 * {@link #getExecutionException()} reports an exception.
-	 * 
-	 * @return The exit code from the Maven invocation.
-	 */
-	int getExitCode();
+    /**
+     * Gets the exit code from the Subversion invocation. A non-zero value
+     * indicates a failure. <strong>Note:</strong> This value is undefined if
+     * {@link #getExecutionException()} reports an exception.
+     * 
+     * @return The exit code from the Subversion invocation.
+     */
+    int getExitCode();
 
 }

@@ -28,124 +28,101 @@ import java.io.InputStream;
  */
 public interface Invoker {
 
-	/**
-	 * The role name used to register implementations of this interface within
-	 * Plexus.
-	 */
-	String ROLE = Invoker.class.getName();
+    /**
+     * The role name used to register implementations of this interface within
+     * Plexus.
+     */
+    String ROLE = Invoker.class.getName();
 
-	/**
-	 * @deprecated Query this property by yourself, this has nothing to do with
-	 *             invoking Maven and as such does not belong into this API!
-	 */
-	String userHome = System.getProperty("user.home");
+    /**
+     * @deprecated Query this property by yourself, this has nothing to do with
+     *             invoking Maven and as such does not belong into this API!
+     */
+    String userHome = System.getProperty("user.home");
 
-	/**
-	 * Executes Maven using the parameters specified by the given invocation
-	 * request. Parameters not specified by the invocation request will be
-	 * derived from the state of this invoker instance. In case both the invoker
-	 * instance and the invocation request provide a value for a particular
-	 * option, the value from the invocation request dominates.
-	 * 
-	 * @param request
-	 *            The invocation request to execute, must not be
-	 *            <code>null</code>.
-	 * @return The result of the Maven invocation, never <code>null</code>.
-	 * @throws MavenInvocationException
-	 */
-	InvocationResult execute(InvocationRequest request)
-			throws MavenInvocationException;
+    /**
+     * Executes Maven using the parameters specified by the given invocation
+     * request. Parameters not specified by the invocation request will be
+     * derived from the state of this invoker instance. In case both the invoker
+     * instance and the invocation request provide a value for a particular
+     * option, the value from the invocation request dominates.
+     * 
+     * @param request
+     *            The invocation request to execute, must not be
+     *            <code>null</code>.
+     * @return The result of the Maven invocation, never <code>null</code>.
+     * @throws MavenInvocationException
+     */
+    InvocationResult execute(InvocationRequest request)
+	    throws MavenInvocationException;
 
-	/**
-	 * Gets the working directory for the Maven invocation.
-	 * 
-	 * @return The working directory for the Maven invocation or
-	 *         <code>null</code> if the working directory is derived from the
-	 *         base directory of the processed POM.
-	 */
-	File getWorkingDirectory();
+    /**
+     * Gets the working directory for the Maven invocation.
+     * 
+     * @return The working directory for the Maven invocation or
+     *         <code>null</code> if the working directory is derived from the
+     *         base directory of the processed POM.
+     */
+    File getWorkingDirectory();
 
-	/**
-	 * Gets the logger used by this invoker to output diagnostic messages.
-	 * 
-	 * @return The logger used by this invoker to output diagnostic messages,
-	 *         never <code>null</code>.
-	 */
-	InvokerLogger getLogger();
+    /**
+     * Gets the logger used by this invoker to output diagnostic messages.
+     * 
+     * @return The logger used by this invoker to output diagnostic messages,
+     *         never <code>null</code>.
+     */
+    InvokerLogger getLogger();
 
-	/**
-	 * Gets the path to the base directory of the Maven installation used to
-	 * invoke Maven.
-	 * 
-	 * @return The path to the base directory of the Maven installation or
-	 *         <code>null</code> if using the default Maven installation.
-	 */
-	File getMavenHome();
+    /**
+     * Sets the logger used by this invoker to output diagnostic messages.
+     * 
+     * @param logger
+     *            The logger used by this invoker to output diagnostic messages,
+     *            may be <code>null</code> to use a default logger.
+     * @return This invoker instance.
+     */
+    Invoker setLogger(InvokerLogger logger);
 
-	/**
-	 * Sets the path to the base directory of the Maven installation used to
-	 * invoke Maven. This parameter may be left unspecified to use the default
-	 * Maven installation which will be discovered by evaluating the system
-	 * property <code>maven.home</code> and the environment variable
-	 * <code>M2_HOME</code>.
-	 * 
-	 * @param mavenHome
-	 *            The path to the base directory of the Maven installation, may
-	 *            be <code>null</code> to use the default Maven installation.
-	 * @return This invoker instance.
-	 */
-	Invoker setMavenHome(File mavenHome);
+    /**
+     * Sets the working directory for the Maven invocation.
+     * 
+     * @param workingDirectory
+     *            The working directory for the Maven invocation, may be
+     *            <code>null</code> to derive the working directory from the
+     *            base directory of the processed POM.
+     * @return This invoker instance.
+     */
+    Invoker setWorkingDirectory(File workingDirectory);
 
-	/**
-	 * Sets the logger used by this invoker to output diagnostic messages.
-	 * 
-	 * @param logger
-	 *            The logger used by this invoker to output diagnostic messages,
-	 *            may be <code>null</code> to use a default logger.
-	 * @return This invoker instance.
-	 */
-	Invoker setLogger(InvokerLogger logger);
+    /**
+     * Sets the input stream used to provide input for the invoked Maven build.
+     * This is in particular useful when invoking Maven in interactive mode.
+     * 
+     * @param inputStream
+     *            The input stream used to provide input for the invoked Maven
+     *            build, may be <code>null</code> if not required.
+     * @return This invoker instance.
+     */
+    Invoker setInputStream(InputStream inputStream);
 
-	/**
-	 * Sets the working directory for the Maven invocation.
-	 * 
-	 * @param workingDirectory
-	 *            The working directory for the Maven invocation, may be
-	 *            <code>null</code> to derive the working directory from the
-	 *            base directory of the processed POM.
-	 * @return This invoker instance.
-	 */
-	Invoker setWorkingDirectory(File workingDirectory);
+    /**
+     * Sets the handler used to capture the standard output from the Maven
+     * build.
+     * 
+     * @param outputHandler
+     *            The output handler, may be <code>null</code> if the output is
+     *            not of interest.
+     * @return This invoker instance.
+     */
+    Invoker setOutputHandler(InvocationOutputHandler outputHandler);
 
-	/**
-	 * Sets the input stream used to provide input for the invoked Maven build.
-	 * This is in particular useful when invoking Maven in interactive mode.
-	 * 
-	 * @param inputStream
-	 *            The input stream used to provide input for the invoked Maven
-	 *            build, may be <code>null</code> if not required.
-	 * @return This invoker instance.
-	 */
-	Invoker setInputStream(InputStream inputStream);
-
-	/**
-	 * Sets the handler used to capture the standard output from the Maven
-	 * build.
-	 * 
-	 * @param outputHandler
-	 *            The output handler, may be <code>null</code> if the output is
-	 *            not of interest.
-	 * @return This invoker instance.
-	 */
-	Invoker setOutputHandler(InvocationOutputHandler outputHandler);
-
-	/**
-	 * Sets the handler used to capture the error output from the Maven build.
-	 * 
-	 * @param errorHandler
-	 *            The error handler, may be <code>null</code> if the output is
-	 *            not of interest.
-	 * @return This invoker instance.
-	 */
-	Invoker setErrorHandler(InvocationOutputHandler errorHandler);
+    /**
+     * Sets the handler used to capture the error output from the Maven build.
+     * 
+     * @param errorHandler
+     *            The error handler, may be <code>null</code> if the output is
+     *            not of interest.
+     * @return This invoker instance.
+     */
+    Invoker setErrorHandler(InvocationOutputHandler errorHandler);
 }

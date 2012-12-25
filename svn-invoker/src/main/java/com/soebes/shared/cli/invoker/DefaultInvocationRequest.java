@@ -34,193 +34,194 @@ import java.util.Properties;
  */
 public class DefaultInvocationRequest implements InvocationRequest {
 
-	private SVNCommands command;
-	private List<String> paremeters;
-	private boolean recursive;
-	private String username;
-	private String password;
-	private boolean noAuthCache;
-	private boolean nonInteractive;
-	private boolean trustServerCert;
-	private File configDir;
-	private String configOption;
-	private InputStream inputStream;
-	private InvocationOutputHandler outputHandler;
-	private InvocationOutputHandler errorHandler;
-	private File baseDirectory;
-	private boolean showVersion;
-	
-	
-	public DefaultInvocationRequest() {
-		setParameters(new ArrayList<String>());
-	}
+    private SVNCommands command;
+    private List<String> paremeters;
+    private boolean recursive;
+    private String username;
+    private String password;
+    private boolean noAuthCache;
+    private boolean nonInteractive;
+    private boolean trustServerCert;
+    private File configDir;
+    private String configOption;
+    private InputStream inputStream;
+    private InvocationOutputHandler outputHandler;
+    private InvocationOutputHandler errorHandler;
+    private File baseDirectory;
+    private boolean showVersion;
 
-	public SVNCommands getCommand() {
-		return this.command;
-	}
+    public DefaultInvocationRequest() {
+	setParameters(new ArrayList<String>());
+    }
 
-	public InvocationRequest setCommand(SVNCommands command) {
-		this.command = command;
-		return this;
-	}
+    public SVNCommands getCommand() {
+	return this.command;
+    }
 
-	public List<String> getParameters() {
-		return paremeters;
-	}
+    public InvocationRequest setCommand(SVNCommands command) {
+	this.command = command;
+	return this;
+    }
 
-	public InvocationRequest setParameters(List<String> parameters) {
-		this.paremeters = parameters;
-		return this;
-	}
+    public List<String> getParameters() {
+	return paremeters;
+    }
 
-	public boolean isRecursive() {
-		return recursive;
-	}
-	
-	public InvocationRequest setRecursive(boolean recursive) {
-		this.recursive = recursive;
-		return this;
-	}
+    public InvocationRequest setParameters(List<String> parameters) {
+	this.paremeters = parameters;
+	return this;
+    }
 
-	public String getUsername() {
-		return this.username;
-	}
+    public boolean isRecursive() {
+	return recursive;
+    }
 
-	public InvocationRequest setUsername(String username) {
-		this.username = username;
-		return this;
-	}
+    public InvocationRequest setRecursive(boolean recursive) {
+	this.recursive = recursive;
+	return this;
+    }
 
-	public String getPassword() {
-		return this.password;
-	}
+    public String getUsername() {
+	return this.username;
+    }
 
-	public InvocationRequest setPassword(String password) {
-		this.password = password;
-		return this;
-	}
+    public InvocationRequest setUsername(String username) {
+	this.username = username;
+	return this;
+    }
 
-	public boolean isNoAuthCache() {
-		return this.noAuthCache;
-	}
+    public String getPassword() {
+	return this.password;
+    }
 
-	public InvocationRequest setNoAuthCache(boolean noAuthCache) {
-		this.noAuthCache = noAuthCache;
-		return this;
-	}
+    public InvocationRequest setPassword(String password) {
+	this.password = password;
+	return this;
+    }
 
-	public boolean isNonInteractive() {
-		return this.nonInteractive;
-	}
+    public boolean isNoAuthCache() {
+	return this.noAuthCache;
+    }
 
-	public InvocationRequest setNonInteractive(boolean nonInteractive) {
-		this.nonInteractive = nonInteractive;
-		return this;
-	}
+    public InvocationRequest setNoAuthCache(boolean noAuthCache) {
+	this.noAuthCache = noAuthCache;
+	return this;
+    }
 
-	public boolean isTrustServerCert() {
-		return this.trustServerCert;
-	}
+    public boolean isNonInteractive() {
+	return this.nonInteractive;
+    }
 
-	public InvocationRequest setTrustServerCert(boolean trustServerCert) {
-		this.trustServerCert = trustServerCert;
-		return this;
-	}
+    public InvocationRequest setNonInteractive(boolean nonInteractive) {
+	this.nonInteractive = nonInteractive;
+	return this;
+    }
 
-	public File getConfigDir() {
-		return this.configDir;
-	}
+    public boolean isTrustServerCert() {
+	return this.trustServerCert;
+    }
 
-	public InvocationRequest setConfigDir(File configDir) {
-		this.configDir = configDir;
-		return this;
-	}
+    public InvocationRequest setTrustServerCert(boolean trustServerCert) {
+	this.trustServerCert = trustServerCert;
+	return this;
+    }
 
-	public String getConfigOption() {
-		return this.configOption;
-	}
+    public File getConfigDir() {
+	return this.configDir;
+    }
 
-	public InvocationRequest setConfigOption(String configOption) {
-		this.configOption = configOption;
-		return this;
-	}
+    public InvocationRequest setConfigDir(File configDir) {
+	this.configDir = configDir;
+	return this;
+    }
 
-	public boolean isShellEnvironmentInherited() {
-		// TODO Auto-generated method stub
-		return false;
-	}
+    public String getConfigOption() {
+	return this.configOption;
+    }
 
-	public InputStream getInputStream(InputStream defaultStream) {
-		return this.inputStream;
-	}
+    public InvocationRequest setConfigOption(String configOption) {
+	this.configOption = configOption;
+	return this;
+    }
 
-	public InvocationOutputHandler getOutputHandler(InvocationOutputHandler defaultHandler) {
-		return this.outputHandler;
-	}
+    public boolean isShellEnvironmentInherited() {
+	// TODO Auto-generated method stub
+	return false;
+    }
 
-	public InvocationOutputHandler getErrorHandler(
-			InvocationOutputHandler defaultHandler) {
-		return this.errorHandler;
-	}
+    public InputStream getInputStream(InputStream defaultStream) {
+	return this.inputStream;
+    }
 
-	public File getBaseDirectory() {
-		return this.baseDirectory;
-	}
+    public InvocationOutputHandler getOutputHandler(
+	    InvocationOutputHandler defaultHandler) {
+	return this.outputHandler;
+    }
 
-	public File getBaseDirectory(File defaultDirectory) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public InvocationOutputHandler getErrorHandler(
+	    InvocationOutputHandler defaultHandler) {
+	return this.errorHandler;
+    }
 
-	public Map<String, String> getShellEnvironments() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public File getBaseDirectory() {
+	return this.baseDirectory;
+    }
 
-	public boolean isShowVersion() {
-		return this.showVersion;
-	}
+    public File getBaseDirectory(File defaultDirectory) {
+	// TODO Auto-generated method stub
+	return null;
+    }
 
-	public InvocationRequest setInputStream(InputStream inputStream) {
-		this.inputStream = inputStream;
-		return this;
-	}
+    public Map<String, String> getShellEnvironments() {
+	// TODO Auto-generated method stub
+	return null;
+    }
 
-	public InvocationRequest setOutputHandler(InvocationOutputHandler outputHandler) {
-		this.outputHandler = outputHandler;
-		return this;
-	}
+    public boolean isShowVersion() {
+	return this.showVersion;
+    }
 
-	public InvocationRequest setErrorHandler(
-			InvocationOutputHandler errorHandler) {
-		this.errorHandler = errorHandler;
-		return this;
-	}
+    public InvocationRequest setInputStream(InputStream inputStream) {
+	this.inputStream = inputStream;
+	return this;
+    }
 
-	public InvocationRequest setBaseDirectory(File basedir) {
-		this.baseDirectory = basedir;
-		return this;
-	}
+    public InvocationRequest setOutputHandler(
+	    InvocationOutputHandler outputHandler) {
+	this.outputHandler = outputHandler;
+	return this;
+    }
 
-	public InvocationRequest setProperties(Properties properties) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public InvocationRequest setErrorHandler(
+	    InvocationOutputHandler errorHandler) {
+	this.errorHandler = errorHandler;
+	return this;
+    }
 
-	public InvocationRequest setShellEnvironmentInherited(
-			boolean shellEnvironmentInherited) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public InvocationRequest setBaseDirectory(File basedir) {
+	this.baseDirectory = basedir;
+	return this;
+    }
 
-	public InvocationRequest addShellEnvironment(String name, String value) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public InvocationRequest setProperties(Properties properties) {
+	// TODO Auto-generated method stub
+	return null;
+    }
 
-	public InvocationRequest setShowVersion(boolean showVersion) {
-		this.showVersion = showVersion;
-		return this;
-	}
+    public InvocationRequest setShellEnvironmentInherited(
+	    boolean shellEnvironmentInherited) {
+	// TODO Auto-generated method stub
+	return null;
+    }
+
+    public InvocationRequest addShellEnvironment(String name, String value) {
+	// TODO Auto-generated method stub
+	return null;
+    }
+
+    public InvocationRequest setShowVersion(boolean showVersion) {
+	this.showVersion = showVersion;
+	return this;
+    }
 
 }

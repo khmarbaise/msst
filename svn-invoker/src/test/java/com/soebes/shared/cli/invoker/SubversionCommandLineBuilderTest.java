@@ -40,163 +40,179 @@ import com.soebes.shared.cli.invoker.InvocationRequest.SVNCommands;
 
 public class SubversionCommandLineBuilderTest {
 
-	private List<File> toDelete = new ArrayList<File>();
+    private List<File> toDelete = new ArrayList<File>();
 
-	private Properties sysProps;
+    private Properties sysProps;
 
-	@Test(expectedExceptions = { IllegalStateException.class })
-	public void testShouldFailIfLoggerSetToNull() throws IOException {
-		logTestStart();
+    @Test(expectedExceptions = { IllegalStateException.class })
+    public void testShouldFailIfLoggerSetToNull() throws IOException {
+	logTestStart();
 
-		TestCommandLineBuilder tclb = new TestCommandLineBuilder();
-		tclb.setLogger(null);
-		tclb.checkRequiredState();
+	TestCommandLineBuilder tclb = new TestCommandLineBuilder();
+	tclb.setLogger(null);
+	tclb.checkRequiredState();
 
-	}
+    }
 
-	@Test
-	public void testSubversionCommand() throws Exception {
-		SubversionCommandLineBuilder commandLineBuilder = new SubversionCommandLineBuilder();
-		File subversionExecutable = new File("svn");
-		commandLineBuilder.setSubversionExecutable(subversionExecutable);
-		File executable = commandLineBuilder.findSVNExecutable();
-		System.out.println("Exe:" + executable.getAbsolutePath());
-		assertThat(executable.exists()).isTrue();
-		assertThat(executable.isAbsolute()).isTrue();
-	}
+    @Test
+    public void testSubversionCommand() throws Exception {
+	SubversionCommandLineBuilder commandLineBuilder = new SubversionCommandLineBuilder();
+	File subversionExecutable = new File("svn");
+	commandLineBuilder.setSubversionExecutable(subversionExecutable);
+	File executable = commandLineBuilder.findSVNExecutable();
+	System.out.println("Exe:" + executable.getAbsolutePath());
+	assertThat(executable.exists()).isTrue();
+	assertThat(executable.isAbsolute()).isTrue();
+    }
 
-	@Test
-	public void testSubversionCommandVersion() throws CommandLineConfigurationException {
-		SubversionCommandLineBuilder commandLineBuilder = new SubversionCommandLineBuilder();
+    @Test
+    public void testSubversionCommandVersion()
+	    throws CommandLineConfigurationException {
+	SubversionCommandLineBuilder commandLineBuilder = new SubversionCommandLineBuilder();
 
-		DefaultInvocationRequest request = new DefaultInvocationRequest();
-		request.setCommand(SVNCommands.none);
-		request.setShowVersion(true);
-//		request.getParameters().add("file:///");
+	DefaultInvocationRequest request = new DefaultInvocationRequest();
+	request.setCommand(SVNCommands.none);
+	request.setShowVersion(true);
 
-		Commandline cli = commandLineBuilder.build(request);
+	Commandline cli = commandLineBuilder.build(request);
 
-		System.out.println("CLI: " + Joiner.on(" " ).join(cli.getCommandline()));
-	}
+	System.out.println("CLI: " + Joiner.on(" ").join(cli.getCommandline()));
+    }
 
-	public void setUp() {
-		sysProps = System.getProperties();
+    @Test
+    public void testSubversionList() throws CommandLineConfigurationException {
+	SubversionCommandLineBuilder commandLineBuilder = new SubversionCommandLineBuilder();
 
-		Properties p = new Properties(sysProps);
+	DefaultInvocationRequest request = new DefaultInvocationRequest();
+	request.setCommand(SVNCommands.list);
+	request.setShowVersion(false);
+	List<String> parameters = new ArrayList<String>();
+	parameters.add("http://svn.apache.org/repos/asf/");
+	request.setParameters(parameters);
 
-		System.setProperties(p);
-	}
+	Commandline cli = commandLineBuilder.build(request);
 
-	public void tearDown() throws IOException {
-		System.setProperties(sysProps);
+	System.out.println("CLI: " + Joiner.on(" ").join(cli.getCommandline()));
+    }
 
-		for (File file : toDelete) {
-			if (file.exists()) {
-				if (file.isDirectory()) {
-					FileUtils.deleteDirectory(file);
-				} else {
-					file.delete();
-				}
-			}
+    public void setUp() {
+	sysProps = System.getProperties();
+
+	Properties p = new Properties(sysProps);
+
+	System.setProperties(p);
+    }
+
+    public void tearDown() throws IOException {
+	System.setProperties(sysProps);
+
+	for (File file : toDelete) {
+	    if (file.exists()) {
+		if (file.isDirectory()) {
+		    FileUtils.deleteDirectory(file);
+		} else {
+		    file.delete();
 		}
+	    }
+	}
+    }
+
+    // this is just a debugging helper for separating unit test output...
+    private void logTestStart() {
+	NullPointerException npe = new NullPointerException();
+	StackTraceElement element = npe.getStackTrace()[1];
+
+	System.out.println("Starting: " + element.getMethodName());
+    }
+
+    private void assertArgumentsPresentInOrder(Commandline cli,
+	    String... expected) {
+	assertArgumentsPresentInOrder(cli, Arrays.asList(expected));
+    }
+
+    private void assertArgumentsPresentInOrder(Commandline cli,
+	    List<String> expected) {
+	String[] arguments = cli.getArguments();
+
+	int expectedCounter = 0;
+
+	for (int i = 0; i < arguments.length; i++) {
+	    if (arguments[i].equals(expected.get(expectedCounter))) {
+		expectedCounter++;
+	    }
 	}
 
-	// this is just a debugging helper for separating unit test output...
-	private void logTestStart() {
-		NullPointerException npe = new NullPointerException();
-		StackTraceElement element = npe.getStackTrace()[1];
+	// assertEquals(
+	// "Arguments: " + expected
+	// + " were not found or are in the wrong order: "
+	// + Arrays.asList(arguments), expected.size(),
+	// expectedCounter);
+    }
 
-		System.out.println("Starting: " + element.getMethodName());
+    private void assertArgumentsPresent(Commandline cli,
+	    Set<String> requiredArgs) {
+	String[] argv = cli.getArguments();
+	List<String> args = Arrays.asList(argv);
+
+	for (String arg : requiredArgs) {
+	    // assertTrue("Command-line argument: \'" + arg +
+	    // "\' is missing in "
+	    // + args, args.contains(arg));
+	}
+    }
+
+    private void assertArgumentsNotPresent(Commandline cli,
+	    Set<String> bannedArgs) {
+	String[] argv = cli.getArguments();
+	List<String> args = Arrays.asList(argv);
+
+	for (String arg : bannedArgs) {
+	    // assertFalse("Command-line argument: \'" + arg
+	    // + "\' should not be present.", args.contains(arg));
+	}
+    }
+
+    private File createDummyFile(File directory, String filename)
+	    throws IOException {
+	File dummyFile = new File(directory, filename);
+
+	FileWriter writer = null;
+	try {
+	    writer = new FileWriter(dummyFile);
+	    writer.write("This is a dummy file.");
+	} finally {
+	    IOUtil.close(writer);
 	}
 
-	private void assertArgumentsPresentInOrder(Commandline cli,
-			String... expected) {
-		assertArgumentsPresentInOrder(cli, Arrays.asList(expected));
+	toDelete.add(dummyFile);
+
+	return dummyFile;
+    }
+
+    private static final class TestCommandLineBuilder extends
+	    SubversionCommandLineBuilder {
+	public void checkRequiredState() throws IOException {
+	    super.checkRequiredState();
 	}
 
-	private void assertArgumentsPresentInOrder(Commandline cli,
-			List<String> expected) {
-		String[] arguments = cli.getArguments();
-
-		int expectedCounter = 0;
-
-		for (int i = 0; i < arguments.length; i++) {
-			if (arguments[i].equals(expected.get(expectedCounter))) {
-				expectedCounter++;
-			}
-		}
-
-
-//		assertEquals(
-//				"Arguments: " + expected
-//						+ " were not found or are in the wrong order: "
-//						+ Arrays.asList(arguments), expected.size(),
-//				expectedCounter);
+	public File findSVNExecutable()
+		throws CommandLineConfigurationException {
+	    return super.findSVNExecutable();
 	}
 
-	private void assertArgumentsPresent(Commandline cli,
-			Set<String> requiredArgs) {
-		String[] argv = cli.getArguments();
-		List<String> args = Arrays.asList(argv);
-
-		for (String arg : requiredArgs) {
-//			assertTrue("Command-line argument: \'" + arg + "\' is missing in "
-//					+ args, args.contains(arg));
-		}
+	public void setFlags(InvocationRequest request, Commandline cli) {
+	    super.setFlags(request, cli);
 	}
 
-	private void assertArgumentsNotPresent(Commandline cli,
-			Set<String> bannedArgs) {
-		String[] argv = cli.getArguments();
-		List<String> args = Arrays.asList(argv);
+    }
 
-		for (String arg : bannedArgs) {
-//			assertFalse("Command-line argument: \'" + arg
-//					+ "\' should not be present.", args.contains(arg));
-		}
-	}
+    private File getTempDir() throws Exception {
+	return new File(System.getProperty("java.io.tmpdir"))
+		.getCanonicalFile();
+    }
 
-	private File createDummyFile(File directory, String filename)
-			throws IOException {
-		File dummyFile = new File(directory, filename);
-
-		FileWriter writer = null;
-		try {
-			writer = new FileWriter(dummyFile);
-			writer.write("This is a dummy file.");
-		} finally {
-			IOUtil.close(writer);
-		}
-
-		toDelete.add(dummyFile);
-
-		return dummyFile;
-	}
-
-	private static final class TestCommandLineBuilder extends
-			SubversionCommandLineBuilder {
-		public void checkRequiredState() throws IOException {
-			super.checkRequiredState();
-		}
-
-		public File findSVNExecutable()
-				throws CommandLineConfigurationException {
-			return super.findSVNExecutable();
-		}
-
-		public void setFlags(InvocationRequest request, Commandline cli) {
-			super.setFlags(request, cli);
-		}
-
-	}
-
-	private File getTempDir() throws Exception {
-		return new File(System.getProperty("java.io.tmpdir"))
-				.getCanonicalFile();
-	}
-
-	private InvocationRequest newRequest() {
-		return new DefaultInvocationRequest();
-	}
+    private InvocationRequest newRequest() {
+	return new DefaultInvocationRequest();
+    }
 
 }

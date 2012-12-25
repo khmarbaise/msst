@@ -36,137 +36,132 @@ import org.codehaus.plexus.util.cli.Commandline;
 @Component(role = Invoker.class, hint = "default")
 public class DefaultInvoker implements Invoker {
 
-	public static final String ROLE_HINT = "default";
+    public static final String ROLE_HINT = "default";
 
-	private static final InvokerLogger DEFAULT_LOGGER = new SystemOutLogger();
+    private static final InvokerLogger DEFAULT_LOGGER = new SystemOutLogger();
 
-	private static final InvocationOutputHandler DEFAULT_OUTPUT_HANDLER = new SystemOutHandler();
+    private static final InvocationOutputHandler DEFAULT_OUTPUT_HANDLER = new SystemOutHandler();
 
-	private InvokerLogger logger = DEFAULT_LOGGER;
+    private InvokerLogger logger = DEFAULT_LOGGER;
 
-	private File workingDirectory;
+    private File workingDirectory;
 
-	private File mavenHome;
+    private InvocationOutputHandler outputHandler = DEFAULT_OUTPUT_HANDLER;
 
-	private InvocationOutputHandler outputHandler = DEFAULT_OUTPUT_HANDLER;
+    private InputStream inputStream;
 
-	private InputStream inputStream;
+    private InvocationOutputHandler errorHandler = DEFAULT_OUTPUT_HANDLER;
 
-	private InvocationOutputHandler errorHandler = DEFAULT_OUTPUT_HANDLER;
+    public InvocationResult execute(InvocationRequest request)
+	    throws MavenInvocationException {
+	SubversionCommandLineBuilder cliBuilder = new SubversionCommandLineBuilder();
 
-	public InvocationResult execute(InvocationRequest request)
-			throws MavenInvocationException {
-		SubversionCommandLineBuilder cliBuilder = new SubversionCommandLineBuilder();
-
-		InvokerLogger logger = getLogger();
-		if (logger != null) {
-			cliBuilder.setLogger(getLogger());
-		}
-
-//		File mavenExecutable = getMavenExecutable();
-//		if (mavenExecutable != null) {
-//			cliBuilder.setSubversionExecutable(mavenExecutable);
-//		}
-
-		File workingDirectory = getWorkingDirectory();
-		if (workingDirectory != null) {
-			cliBuilder.setWorkingDirectory(getWorkingDirectory());
-		}
-
-		Commandline cli;
-		try {
-			cli = cliBuilder.build(request);
-		} catch (CommandLineConfigurationException e) {
-			throw new MavenInvocationException(
-					"Error configuring command-line. Reason: " + e.getMessage(),
-					e);
-		}
-
-		DefaultInvocationResult result = new DefaultInvocationResult();
-
-		try {
-			int exitCode = executeCommandLine(cli, request);
-
-			result.setExitCode(exitCode);
-		} catch (CommandLineException e) {
-			result.setExecutionException(e);
-		}
-
-		return result;
+	InvokerLogger logger = getLogger();
+	if (logger != null) {
+	    cliBuilder.setLogger(getLogger());
 	}
 
-	private int executeCommandLine(Commandline cli, InvocationRequest request) throws CommandLineException {
-		int result = Integer.MIN_VALUE;
+	// File mavenExecutable = getMavenExecutable();
+	// if (mavenExecutable != null) {
+	// cliBuilder.setSubversionExecutable(mavenExecutable);
+	// }
 
-		InputStream inputStream = request.getInputStream(this.inputStream);
-		InvocationOutputHandler outputHandler = request.getOutputHandler(this.outputHandler);
-		InvocationOutputHandler errorHandler = request.getErrorHandler(this.errorHandler);
-
-		if (getLogger().isDebugEnabled()) {
-			getLogger().debug("Executing: " + cli);
-		}
-		if (!request.isNonInteractive()) {
-			if (inputStream == null) {
-				getLogger()
-						.warn("Subversion will be executed in interactive mode"
-								+ ", but no input stream has been configured for this SVNInvoker instance.");
-
-				result = CommandLineUtils.executeCommandLine(cli, outputHandler, errorHandler);
-			} else {
-				result = CommandLineUtils.executeCommandLine(cli, inputStream, outputHandler, errorHandler);
-			}
-		} else {
-			if (inputStream != null) {
-				getLogger().info("Executing in batch mode. The configured input stream will be ignored.");
-			}
-
-			result = CommandLineUtils.executeCommandLine(cli, outputHandler, errorHandler);
-		}
-
-		return result;
+	File workingDirectory = getWorkingDirectory();
+	if (workingDirectory != null) {
+	    cliBuilder.setWorkingDirectory(getWorkingDirectory());
 	}
 
-	public InvokerLogger getLogger() {
-		return logger;
+	Commandline cli;
+	try {
+	    cli = cliBuilder.build(request);
+	} catch (CommandLineConfigurationException e) {
+	    throw new MavenInvocationException(
+		    "Error configuring command-line. Reason: " + e.getMessage(),
+		    e);
 	}
 
-	public Invoker setLogger(InvokerLogger logger) {
-		this.logger = (logger != null) ? logger : DEFAULT_LOGGER;
-		return this;
+	DefaultInvocationResult result = new DefaultInvocationResult();
+
+	try {
+	    int exitCode = executeCommandLine(cli, request);
+
+	    result.setExitCode(exitCode);
+	} catch (CommandLineException e) {
+	    result.setExecutionException(e);
 	}
 
-	public File getWorkingDirectory() {
-		return workingDirectory;
+	return result;
+    }
+
+    private int executeCommandLine(Commandline cli, InvocationRequest request)
+	    throws CommandLineException {
+	int result = Integer.MIN_VALUE;
+
+	InputStream inputStream = request.getInputStream(this.inputStream);
+	InvocationOutputHandler outputHandler = request
+		.getOutputHandler(this.outputHandler);
+	InvocationOutputHandler errorHandler = request
+		.getErrorHandler(this.errorHandler);
+
+	if (getLogger().isDebugEnabled()) {
+	    getLogger().debug("Executing: " + cli);
+	}
+	if (!request.isNonInteractive()) {
+	    if (inputStream == null) {
+		getLogger()
+			.warn("Subversion will be executed in interactive mode"
+				+ ", but no input stream has been configured for this SVNInvoker instance.");
+
+		result = CommandLineUtils.executeCommandLine(cli,
+			outputHandler, errorHandler);
+	    } else {
+		result = CommandLineUtils.executeCommandLine(cli, inputStream,
+			outputHandler, errorHandler);
+	    }
+	} else {
+	    if (inputStream != null) {
+		getLogger()
+			.info("Executing in batch mode. The configured input stream will be ignored.");
+	    }
+
+	    result = CommandLineUtils.executeCommandLine(cli, outputHandler,
+		    errorHandler);
 	}
 
-	public Invoker setWorkingDirectory(File workingDirectory) {
-		this.workingDirectory = workingDirectory;
-		return this;
-	}
+	return result;
+    }
 
-	public File getMavenHome() {
-		return mavenHome;
-	}
+    public InvokerLogger getLogger() {
+	return logger;
+    }
 
-	public Invoker setMavenHome(File mavenHome) {
-		this.mavenHome = mavenHome;
+    public Invoker setLogger(InvokerLogger logger) {
+	this.logger = (logger != null) ? logger : DEFAULT_LOGGER;
+	return this;
+    }
 
-		return this;
-	}
+    public File getWorkingDirectory() {
+	return workingDirectory;
+    }
 
-	public Invoker setErrorHandler(InvocationOutputHandler errorHandler) {
-		this.errorHandler = errorHandler;
-		return this;
-	}
+    public Invoker setWorkingDirectory(File workingDirectory) {
+	this.workingDirectory = workingDirectory;
+	return this;
+    }
 
-	public Invoker setInputStream(InputStream inputStream) {
-		this.inputStream = inputStream;
-		return this;
-	}
+    public Invoker setErrorHandler(InvocationOutputHandler errorHandler) {
+	this.errorHandler = errorHandler;
+	return this;
+    }
 
-	public Invoker setOutputHandler(InvocationOutputHandler outputHandler) {
-		this.outputHandler = outputHandler;
-		return this;
-	}
+    public Invoker setInputStream(InputStream inputStream) {
+	this.inputStream = inputStream;
+	return this;
+    }
+
+    public Invoker setOutputHandler(InvocationOutputHandler outputHandler) {
+	this.outputHandler = outputHandler;
+	return this;
+    }
 
 }
