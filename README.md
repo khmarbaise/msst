@@ -15,6 +15,25 @@ Maven Subversion Scripting Tool
         +--- module-2
         +--- module-3
 
+  <repositories>
+      <repository>
+        <id>xyz</id>
+        <modules>
+          <module>module-1</module>
+          <module>module-2</module>
+          <module>module-3</module>
+        </modules>
+      </repository>
+      <repository>
+        <id>abc</id>
+        <modules>
+          <module>module-1</module>
+          <module>module-2</module>
+          <module>module-3</module>
+        </modules>
+      </repository>
+  </repositories>
+
 Simpler Usage on a "application" level.
 
   Define an application like app1
@@ -27,7 +46,28 @@ Simpler Usage on a "application" level.
           +--- module-3
 
 
+  <applications>
+    <repositories>
+      <repository>
+        <id>xyz</id>
+        <modules>
+          <module>module-1</module>
+          <module>module-2</module>
+        </modules>
+      </repository>
+      <repository>
+        <id>abc</id>
+        <modules>
+          <module>module-3</module>
+        </modules>
+      </repository>
+    </repositories>
+  </applications>
 
+
+  what about yaml format might be simpler to handle in particular for human beings.
+
+  
 - Basic Command
 
 
