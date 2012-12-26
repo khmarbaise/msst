@@ -5,15 +5,18 @@ Maven Subversion Scripting Tool
   inclusive modules
 
   like:
-     xyz
-        +--- module-1
-        +--- module-2
-        +--- module-3
 
-     abc
-        +--- module-1
-        +--- module-2
-        +--- module-3
+	xyz
+ 	  +--- module-1
+	  +--- module-2
+	  +--- module-3
+
+	abc
+	  +--- module-1
+	  +--- module-2
+	  +--- module-3
+
+
 
 	<repositories>
 	  <repository>
@@ -33,6 +36,24 @@ Maven Subversion Scripting Tool
 	    </modules>
 	  </repository>
 	</repositories>
+
+
+  Might be simpler in [yaml](http://yaml.org) format:
+
+	repositories:
+		repository:
+			id: xyz
+			modules:
+				module: module-1
+				module: module-2
+				module: module-3
+		repository:
+			id: abc
+			modules:
+				module: module-1
+				module: module-2
+				module: module-3
+
 
 Simpler Usage on a "application" level.
 
@@ -67,7 +88,25 @@ Simpler Usage on a "application" level.
 
   what about yaml format might be simpler to handle in particular for human beings.
 
-  
+
+	applications:
+		repositories:
+			repository:
+				id: xyz
+				modules:
+					module: module-1
+					module: module-2
+					module: module-3
+			repository:
+				id: abc
+				modules:
+					module: module-1
+					module: module-2
+					module: module-3
+
+
+
+ 
 - Basic Command
 
 
