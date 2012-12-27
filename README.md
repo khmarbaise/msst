@@ -148,6 +148,8 @@ svn-invoker
           => with conflicts.
               Leave unchanged for manual solution.
               May be move to a particular location
+              Check if the conflicts are only in the pom.xml files
+              in the version tag? => solution use the one from the BRANCH-NAME.
 
 
 
