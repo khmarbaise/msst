@@ -21,7 +21,7 @@ package com.soebes.shared.cli.invoker;
 
 /**
  * Offers an output handler that writes to {@link System#out}.
- * 
+ *
  * @version $Id: SystemOutHandler.java 661996 2008-05-31 10:50:38Z bentmann $
  */
 public class SystemOutHandler extends PrintStreamHandler {
@@ -30,18 +30,17 @@ public class SystemOutHandler extends PrintStreamHandler {
      * Creates a new output handler.
      */
     public SystemOutHandler() {
-	this(false);
+        this(false);
     }
 
     /**
      * Creates a new output handler.
-     * 
-     * @param alwaysFlush
-     *            A flag whether the print stream should be flushed after each
-     *            line.
+     *
+     * @param alwaysFlush A flag whether the print stream should be flushed after each
+     *                    line.
      */
     public SystemOutHandler(boolean alwaysFlush) {
-	super(System.out, alwaysFlush);
+        super(System.out, alwaysFlush);
     }
 
 }

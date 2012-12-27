@@ -28,7 +28,7 @@ import java.util.Properties;
 
 /**
  * Specifies the parameters used to control a SVN invocation.
- * 
+ *
  * @version $Id: DefaultInvocationRequest.java 1392618 2012-10-01 21:20:53Z
  *          rfscholte $
  */
@@ -51,177 +51,177 @@ public class DefaultInvocationRequest implements InvocationRequest {
     private boolean showVersion;
 
     public DefaultInvocationRequest() {
-	setParameters(new ArrayList<String>());
+        setParameters(new ArrayList<String>());
     }
 
     public SVNCommands getCommand() {
-	return this.command;
+        return this.command;
     }
 
     public InvocationRequest setCommand(SVNCommands command) {
-	this.command = command;
-	return this;
+        this.command = command;
+        return this;
     }
 
     public List<String> getParameters() {
-	return paremeters;
+        return paremeters;
     }
 
     public InvocationRequest setParameters(List<String> parameters) {
-	this.paremeters = parameters;
-	return this;
+        this.paremeters = parameters;
+        return this;
     }
 
     public boolean isRecursive() {
-	return recursive;
+        return recursive;
     }
 
     public InvocationRequest setRecursive(boolean recursive) {
-	this.recursive = recursive;
-	return this;
+        this.recursive = recursive;
+        return this;
     }
 
     public String getUsername() {
-	return this.username;
+        return this.username;
     }
 
     public InvocationRequest setUsername(String username) {
-	this.username = username;
-	return this;
+        this.username = username;
+        return this;
     }
 
     public String getPassword() {
-	return this.password;
+        return this.password;
     }
 
     public InvocationRequest setPassword(String password) {
-	this.password = password;
-	return this;
+        this.password = password;
+        return this;
     }
 
     public boolean isNoAuthCache() {
-	return this.noAuthCache;
+        return this.noAuthCache;
     }
 
     public InvocationRequest setNoAuthCache(boolean noAuthCache) {
-	this.noAuthCache = noAuthCache;
-	return this;
+        this.noAuthCache = noAuthCache;
+        return this;
     }
 
     public boolean isNonInteractive() {
-	return this.nonInteractive;
+        return this.nonInteractive;
     }
 
     public InvocationRequest setNonInteractive(boolean nonInteractive) {
-	this.nonInteractive = nonInteractive;
-	return this;
+        this.nonInteractive = nonInteractive;
+        return this;
     }
 
     public boolean isTrustServerCert() {
-	return this.trustServerCert;
+        return this.trustServerCert;
     }
 
     public InvocationRequest setTrustServerCert(boolean trustServerCert) {
-	this.trustServerCert = trustServerCert;
-	return this;
+        this.trustServerCert = trustServerCert;
+        return this;
     }
 
     public File getConfigDir() {
-	return this.configDir;
+        return this.configDir;
     }
 
     public InvocationRequest setConfigDir(File configDir) {
-	this.configDir = configDir;
-	return this;
+        this.configDir = configDir;
+        return this;
     }
 
     public String getConfigOption() {
-	return this.configOption;
+        return this.configOption;
     }
 
     public InvocationRequest setConfigOption(String configOption) {
-	this.configOption = configOption;
-	return this;
+        this.configOption = configOption;
+        return this;
     }
 
     public boolean isShellEnvironmentInherited() {
-	// TODO Auto-generated method stub
-	return false;
+        // TODO Auto-generated method stub
+        return false;
     }
 
     public InputStream getInputStream(InputStream defaultStream) {
-	return this.inputStream;
+        return this.inputStream;
     }
 
     public InvocationOutputHandler getOutputHandler(
-	    InvocationOutputHandler defaultHandler) {
-	return this.outputHandler;
+            InvocationOutputHandler defaultHandler) {
+        return this.outputHandler;
     }
 
     public InvocationOutputHandler getErrorHandler(
-	    InvocationOutputHandler defaultHandler) {
-	return this.errorHandler;
+            InvocationOutputHandler defaultHandler) {
+        return this.errorHandler;
     }
 
     public File getBaseDirectory() {
-	return this.baseDirectory;
+        return this.baseDirectory;
     }
 
     public File getBaseDirectory(File defaultDirectory) {
-	// TODO Auto-generated method stub
-	return null;
+        // TODO Auto-generated method stub
+        return null;
     }
 
     public Map<String, String> getShellEnvironments() {
-	// TODO Auto-generated method stub
-	return null;
+        // TODO Auto-generated method stub
+        return null;
     }
 
     public boolean isShowVersion() {
-	return this.showVersion;
+        return this.showVersion;
     }
 
     public InvocationRequest setInputStream(InputStream inputStream) {
-	this.inputStream = inputStream;
-	return this;
+        this.inputStream = inputStream;
+        return this;
     }
 
     public InvocationRequest setOutputHandler(
-	    InvocationOutputHandler outputHandler) {
-	this.outputHandler = outputHandler;
-	return this;
+            InvocationOutputHandler outputHandler) {
+        this.outputHandler = outputHandler;
+        return this;
     }
 
     public InvocationRequest setErrorHandler(
-	    InvocationOutputHandler errorHandler) {
-	this.errorHandler = errorHandler;
-	return this;
+            InvocationOutputHandler errorHandler) {
+        this.errorHandler = errorHandler;
+        return this;
     }
 
     public InvocationRequest setBaseDirectory(File basedir) {
-	this.baseDirectory = basedir;
-	return this;
+        this.baseDirectory = basedir;
+        return this;
     }
 
     public InvocationRequest setProperties(Properties properties) {
-	// TODO Auto-generated method stub
-	return null;
+        // TODO Auto-generated method stub
+        return null;
     }
 
     public InvocationRequest setShellEnvironmentInherited(
-	    boolean shellEnvironmentInherited) {
-	// TODO Auto-generated method stub
-	return null;
+            boolean shellEnvironmentInherited) {
+        // TODO Auto-generated method stub
+        return null;
     }
 
     public InvocationRequest addShellEnvironment(String name, String value) {
-	// TODO Auto-generated method stub
-	return null;
+        // TODO Auto-generated method stub
+        return null;
     }
 
     public InvocationRequest setShowVersion(boolean showVersion) {
-	this.showVersion = showVersion;
-	return this;
+        this.showVersion = showVersion;
+        return this;
     }
 
 }

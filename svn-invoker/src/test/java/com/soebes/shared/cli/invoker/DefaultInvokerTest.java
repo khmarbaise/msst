@@ -19,7 +19,10 @@ package com.soebes.shared.cli.invoker;
  * under the License.
  */
 
-import static org.fest.assertions.Assertions.assertThat;
+import com.soebes.shared.cli.invoker.InvocationRequest.SVNCommands;
+import org.apache.maven.plugin.MojoExecutionException;
+import org.codehaus.plexus.util.StringUtils;
+import org.testng.annotations.Test;
 
 import java.io.File;
 import java.io.IOException;
@@ -29,96 +32,92 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.maven.plugin.MojoExecutionException;
-import org.codehaus.plexus.util.StringUtils;
-import org.testng.annotations.Test;
-
-import com.soebes.shared.cli.invoker.InvocationRequest.SVNCommands;
+import static org.fest.assertions.Assertions.assertThat;
 
 public class DefaultInvokerTest {
 
     private FileLogger setupLogger(File basedir) throws MojoExecutionException,
-	    IOException {
-	return new FileLogger(new File(basedir, "build.log"));
+            IOException {
+        return new FileLogger(new File(basedir, "build.log"));
     }
 
     @Test
     public void testBuildShouldSucceed() throws IOException,
-	    MavenInvocationException, URISyntaxException,
-	    MojoExecutionException {
-	File basedir = getBasedirForBuild();
+            MavenInvocationException, URISyntaxException,
+            MojoExecutionException {
+        File basedir = getBasedirForBuild();
 
-	Invoker invoker = newInvoker();
+        Invoker invoker = newInvoker();
 
-	InvocationRequest request = new DefaultInvocationRequest();
-	request.setBaseDirectory(basedir);
+        InvocationRequest request = new DefaultInvocationRequest();
+        request.setBaseDirectory(basedir);
 
-	FileLogger flog = setupLogger(basedir);
-	request.setErrorHandler(flog);
-	request.setOutputHandler(flog);
+        FileLogger flog = setupLogger(basedir);
+        request.setErrorHandler(flog);
+        request.setOutputHandler(flog);
 
-	request.setCommand(SVNCommands.none);
-	request.setShowVersion(true);
+        request.setCommand(SVNCommands.none);
+        request.setShowVersion(true);
 
-	InvocationResult result = invoker.execute(request);
+        InvocationResult result = invoker.execute(request);
 
-	assertThat(result.getExitCode()).isEqualTo(0);
+        assertThat(result.getExitCode()).isEqualTo(0);
 
     }
 
     @Test
     public void testSvnCommandListShouldSucceed() throws IOException,
-	    MavenInvocationException, URISyntaxException,
-	    MojoExecutionException {
-	File basedir = getBasedirForBuild();
+            MavenInvocationException, URISyntaxException,
+            MojoExecutionException {
+        File basedir = getBasedirForBuild();
 
-	Invoker invoker = newInvoker();
+        Invoker invoker = newInvoker();
 
-	InvocationRequest request = new DefaultInvocationRequest();
-	request.setBaseDirectory(basedir);
+        InvocationRequest request = new DefaultInvocationRequest();
+        request.setBaseDirectory(basedir);
 
-	FileLogger flog = setupLogger(basedir);
-	request.setErrorHandler(flog);
-	request.setOutputHandler(flog);
+        FileLogger flog = setupLogger(basedir);
+        request.setErrorHandler(flog);
+        request.setOutputHandler(flog);
 
-	request.setCommand(SVNCommands.list);
-	request.setShowVersion(false);
-	List<String> parameters = new ArrayList<String>();
-	parameters.add("http://svn.apache.org/repos/asf/");
-	request.setParameters(parameters);
+        request.setCommand(SVNCommands.list);
+        request.setShowVersion(false);
+        List<String> parameters = new ArrayList<String>();
+        parameters.add("http://svn.apache.org/repos/asf/");
+        request.setParameters(parameters);
 
-	InvocationResult result = invoker.execute(request);
+        InvocationResult result = invoker.execute(request);
 
-	assertThat(result.getExitCode()).isEqualTo(0);
+        assertThat(result.getExitCode()).isEqualTo(0);
 
     }
 
     private Invoker newInvoker() throws IOException {
-	Invoker invoker = new DefaultInvoker();
+        Invoker invoker = new DefaultInvoker();
 
-	InvokerLogger logger = new SystemOutLogger();
+        InvokerLogger logger = new SystemOutLogger();
 
-	logger.setThreshold(InvokerLogger.DEBUG);
-	invoker.setLogger(logger);
+        logger.setThreshold(InvokerLogger.DEBUG);
+        invoker.setLogger(logger);
 
-	return invoker;
+        return invoker;
     }
 
     private File getBasedirForBuild() throws URISyntaxException {
-	StackTraceElement element = new NullPointerException().getStackTrace()[1];
-	String methodName = element.getMethodName();
+        StackTraceElement element = new NullPointerException().getStackTrace()[1];
+        String methodName = element.getMethodName();
 
-	String dirName = StringUtils.addAndDeHump(methodName);
+        String dirName = StringUtils.addAndDeHump(methodName);
 
-	ClassLoader cloader = Thread.currentThread().getContextClassLoader();
-	URL dirResource = cloader.getResource(dirName);
+        ClassLoader cloader = Thread.currentThread().getContextClassLoader();
+        URL dirResource = cloader.getResource(dirName);
 
-	// if (dirResource == null) {
-	// throw new IllegalStateException("Project: " + dirName
-	// + " for test method: " + methodName + " is missing.");
-	// }
-	//
-	return new File(new URI(dirResource.toString()).getPath());
+        // if (dirResource == null) {
+        // throw new IllegalStateException("Project: " + dirName
+        // + " for test method: " + methodName + " is missing.");
+        // }
+        //
+        return new File(new URI(dirResource.toString()).getPath());
     }
 
     // this is just a debugging helper for separating unit test output...

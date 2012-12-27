@@ -2,5 +2,7 @@
 .project
 nbactions.xml
 .settings
+.idea
+*.iml
 target
 test-output

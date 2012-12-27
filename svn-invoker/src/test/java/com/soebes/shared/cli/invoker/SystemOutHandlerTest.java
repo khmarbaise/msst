@@ -19,33 +19,31 @@ package com.soebes.shared.cli.invoker;
  * under the License.
  */
 
-import com.soebes.shared.cli.invoker.SystemOutHandler;
-
 import junit.framework.TestCase;
 
 public class SystemOutHandlerTest extends TestCase {
 
     public void testConsumeWithoutAlwaysFlush() {
-	logTestStart();
-	new SystemOutHandler(false).consumeLine("This is a test.");
+        logTestStart();
+        new SystemOutHandler(false).consumeLine("This is a test.");
     }
 
     public void testConsumeWithAlwaysFlush() {
-	logTestStart();
-	new SystemOutHandler(true).consumeLine("This is a test.");
+        logTestStart();
+        new SystemOutHandler(true).consumeLine("This is a test.");
     }
 
     public void testConsumeNullLine() {
-	logTestStart();
-	new SystemOutHandler().consumeLine(null);
+        logTestStart();
+        new SystemOutHandler().consumeLine(null);
     }
 
     // this is just a debugging helper for separating unit test output...
     private void logTestStart() {
-	NullPointerException npe = new NullPointerException();
-	StackTraceElement element = npe.getStackTrace()[1];
+        NullPointerException npe = new NullPointerException();
+        StackTraceElement element = npe.getStackTrace()[1];
 
-	System.out.println("Starting: " + element.getMethodName());
+        System.out.println("Starting: " + element.getMethodName());
     }
 
 }
