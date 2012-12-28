@@ -1,4 +1,4 @@
-package com.soebes.shared.cli.invoker;
+package com.soebes.shared.svn.invoker;
 
 import java.io.File;
 import java.net.URL;

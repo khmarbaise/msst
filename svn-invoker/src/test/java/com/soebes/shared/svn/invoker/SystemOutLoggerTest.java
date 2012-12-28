@@ -1,4 +1,4 @@
-package com.soebes.shared.cli.invoker;
+package com.soebes.shared.svn.invoker;
 
 /*
  * Licensed to the Apache Software Foundation (ASF) under one
@@ -22,6 +22,9 @@ package com.soebes.shared.cli.invoker;
 import junit.framework.TestCase;
 
 import java.net.MalformedURLException;
+
+import com.soebes.shared.svn.invoker.InvokerLogger;
+import com.soebes.shared.svn.invoker.SystemOutLogger;
 
 public class SystemOutLoggerTest extends TestCase {
 

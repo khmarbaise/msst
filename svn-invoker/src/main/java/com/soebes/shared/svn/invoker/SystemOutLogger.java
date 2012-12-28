@@ -1,4 +1,4 @@
-package com.soebes.shared.cli.invoker;
+package com.soebes.shared.svn.invoker;
 
 /*
  * Licensed to the Apache Software Foundation (ASF) under one
@@ -19,31 +19,18 @@ package com.soebes.shared.cli.invoker;
  * under the License.
  */
 
-import junit.framework.TestCase;
+/**
+ * Offers a logger that writes to {@link System#out}.
+ *
+ * @version $Id: SystemOutLogger.java 661996 2008-05-31 10:50:38Z bentmann $
+ */
+public class SystemOutLogger extends PrintStreamLogger {
 
-public class SystemOutHandlerTest extends TestCase {
-
-    public void testConsumeWithoutAlwaysFlush() {
-	logTestStart();
-	new SystemOutHandler(false).consumeLine("This is a test.");
-    }
-
-    public void testConsumeWithAlwaysFlush() {
-	logTestStart();
-	new SystemOutHandler(true).consumeLine("This is a test.");
-    }
-
-    public void testConsumeNullLine() {
-	logTestStart();
-	new SystemOutHandler().consumeLine(null);
-    }
-
-    // this is just a debugging helper for separating unit test output...
-    private void logTestStart() {
-	NullPointerException npe = new NullPointerException();
-	StackTraceElement element = npe.getStackTrace()[1];
-
-	System.out.println("Starting: " + element.getMethodName());
+    /**
+     * Creates a new logger with a threshold of {@link #INFO}.
+     */
+    public SystemOutLogger() {
+        super(System.out, INFO);
     }
 
 }

@@ -1,4 +1,4 @@
-package com.soebes.shared.cli.invoker;
+package com.soebes.shared.svn.invoker;
 
 /*
  * Licensed to the Apache Software Foundation (ASF) under one
@@ -21,12 +21,15 @@ package com.soebes.shared.cli.invoker;
 
 /**
  * Signals an error during the construction of the command line used to invoke
- * Maven.
+ * Maven, e.g. illegal invocation arguments. This should not be confused with a
+ * failure of the invoked Maven build itself which will be reported by means of
+ * a non-zero exit code.
  *
- * @version $Id: CommandLineConfigurationException.java 662043 2008-05-31
- *          16:27:02Z bentmann $
+ * @version $Id: MavenInvocationException.java 662043 2008-05-31 16:27:02Z
+ *          bentmann $
+ * @see InvocationResult#getExitCode()
  */
-public class CommandLineConfigurationException extends Exception {
+public class SubversionInvocationException extends Exception {
 
     private static final long serialVersionUID = 1L;
 
@@ -37,7 +40,7 @@ public class CommandLineConfigurationException extends Exception {
      *                <code>null</code>.
      * @param cause   The nested exception, may be <code>null</code>.
      */
-    public CommandLineConfigurationException(String message, Throwable cause) {
+    public SubversionInvocationException(String message, Throwable cause) {
         super(message, cause);
     }
 
@@ -47,7 +50,7 @@ public class CommandLineConfigurationException extends Exception {
      * @param message The detail message for this exception, may be
      *                <code>null</code>.
      */
-    public CommandLineConfigurationException(String message) {
+    public SubversionInvocationException(String message) {
         super(message);
     }
 

@@ -1,4 +1,4 @@
-package com.soebes.shared.cli.invoker;
+package com.soebes.shared.svn.invoker;
 
 /*
  * Licensed to the Apache Software Foundation (ASF) under one

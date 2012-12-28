@@ -1,4 +1,4 @@
-package com.soebes.shared.cli.invoker;
+package com.soebes.shared.svn.invoker;
 
 /*
  * Licensed to the Apache Software Foundation (ASF) under one
@@ -32,7 +32,16 @@ import org.codehaus.plexus.util.StringUtils;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import com.soebes.shared.cli.invoker.InvocationRequest.SVNCommands;
+import com.soebes.shared.svn.invoker.DefaultInvocationRequest;
+import com.soebes.shared.svn.invoker.DefaultInvoker;
+import com.soebes.shared.svn.invoker.FileLogger;
+import com.soebes.shared.svn.invoker.InvocationRequest;
+import com.soebes.shared.svn.invoker.InvocationResult;
+import com.soebes.shared.svn.invoker.Invoker;
+import com.soebes.shared.svn.invoker.InvokerLogger;
+import com.soebes.shared.svn.invoker.SubversionInvocationException;
+import com.soebes.shared.svn.invoker.SystemOutLogger;
+import com.soebes.shared.svn.invoker.InvocationRequest.SVNCommands;
 
 public class DefaultInvokerTest extends TestBase {
     
@@ -45,13 +54,10 @@ public class DefaultInvokerTest extends TestBase {
 
 	String logFileNameForTest = StringUtils.addAndDeHump(method.getName());
 
-	System.out.println("Method:" + method.getName()+  " Meta:" + logFileNameForTest);
-
 	invoker = newInvoker();
 
 	request = new DefaultInvocationRequest();
 	request.setBaseDirectory(basedir);
-
 
 	FileLogger flog = setupLogger(basedir, "build-" + logFileNameForTest + ".log");
 	request.setErrorHandler(flog);
@@ -75,8 +81,6 @@ public class DefaultInvokerTest extends TestBase {
 
 	request.setCommand(SVNCommands.list);
 	request.setParameters(Collections.singletonList("http://svn.apache.org/repos/asf/"));
-	request.setBaseDirectory(getTargetDirFile());
-//	invoker.setWorkingDirectory(getTargetDirFile());
 	InvocationResult result = invoker.execute(request);
 
 	assertThat(result.getExitCode()).isEqualTo(0);

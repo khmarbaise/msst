@@ -1,4 +1,4 @@
-package com.soebes.shared.cli.invoker;
+package com.soebes.shared.svn.invoker;
 
 /*
  * Licensed to the Apache Software Foundation (ASF) under one
@@ -19,18 +19,14 @@ package com.soebes.shared.cli.invoker;
  * under the License.
  */
 
+import org.codehaus.plexus.util.cli.StreamConsumer;
+
 /**
- * Offers a logger that writes to {@link System#out}.
+ * Receives the standard/error output from a Maven invocation.
  *
- * @version $Id: SystemOutLogger.java 661996 2008-05-31 10:50:38Z bentmann $
+ * @version $Id: InvocationOutputHandler.java 1401842 2012-10-24 19:49:47Z
+ *          rfscholte $
  */
-public class SystemOutLogger extends PrintStreamLogger {
-
-    /**
-     * Creates a new logger with a threshold of {@link #INFO}.
-     */
-    public SystemOutLogger() {
-        super(System.out, INFO);
-    }
-
+public interface InvocationOutputHandler extends StreamConsumer {
+    // empty by design
 }

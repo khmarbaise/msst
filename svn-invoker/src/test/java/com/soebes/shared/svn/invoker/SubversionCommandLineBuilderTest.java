@@ -1,4 +1,4 @@
-package com.soebes.shared.cli.invoker;
+package com.soebes.shared.svn.invoker;
 
 /*
  * Licensed to the Apache Software Foundation (ASF) under one
@@ -32,7 +32,11 @@ import org.codehaus.plexus.util.cli.Commandline;
 import org.testng.annotations.Test;
 
 import com.google.common.base.Joiner;
-import com.soebes.shared.cli.invoker.InvocationRequest.SVNCommands;
+import com.soebes.shared.svn.invoker.CommandLineConfigurationException;
+import com.soebes.shared.svn.invoker.DefaultInvocationRequest;
+import com.soebes.shared.svn.invoker.InvocationRequest;
+import com.soebes.shared.svn.invoker.SubversionCommandLineBuilder;
+import com.soebes.shared.svn.invoker.InvocationRequest.SVNCommands;
 
 public class SubversionCommandLineBuilderTest {
 

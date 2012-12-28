@@ -1,4 +1,4 @@
-package com.soebes.shared.cli.invoker;
+package com.soebes.shared.svn.invoker;
 
 import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.shared.scriptinterpreter.ExecutionLogger;

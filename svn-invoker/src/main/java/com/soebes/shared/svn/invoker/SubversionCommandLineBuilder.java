@@ -1,4 +1,4 @@
-package com.soebes.shared.cli.invoker;
+package com.soebes.shared.svn.invoker;
 
 /*
  * Licensed to the Apache Software Foundation (ASF) under one
@@ -19,7 +19,8 @@ package com.soebes.shared.cli.invoker;
  * under the License.
  */
 
-import com.soebes.shared.cli.invoker.InvocationRequest.SVNCommands;
+import com.soebes.shared.svn.invoker.InvocationRequest.SVNCommands;
+
 import org.codehaus.plexus.util.cli.Commandline;
 
 import java.io.File;
