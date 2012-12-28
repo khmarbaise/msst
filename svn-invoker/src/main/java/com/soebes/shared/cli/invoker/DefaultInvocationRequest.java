@@ -52,6 +52,7 @@ public class DefaultInvocationRequest implements InvocationRequest {
 
     public DefaultInvocationRequest() {
         setParameters(new ArrayList<String>());
+        setShowVersion(false);
     }
 
     public SVNCommands getCommand() {

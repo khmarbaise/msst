@@ -29,7 +29,7 @@ package com.soebes.shared.cli.invoker;
  *          bentmann $
  * @see InvocationResult#getExitCode()
  */
-public class MavenInvocationException extends Exception {
+public class SubversionInvocationException extends Exception {
 
     private static final long serialVersionUID = 1L;
 
@@ -40,7 +40,7 @@ public class MavenInvocationException extends Exception {
      *                <code>null</code>.
      * @param cause   The nested exception, may be <code>null</code>.
      */
-    public MavenInvocationException(String message, Throwable cause) {
+    public SubversionInvocationException(String message, Throwable cause) {
         super(message, cause);
     }
 
@@ -50,7 +50,7 @@ public class MavenInvocationException extends Exception {
      * @param message The detail message for this exception, may be
      *                <code>null</code>.
      */
-    public MavenInvocationException(String message) {
+    public SubversionInvocationException(String message) {
         super(message);
     }
 

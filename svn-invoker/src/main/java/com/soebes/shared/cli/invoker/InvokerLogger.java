@@ -28,6 +28,14 @@ package com.soebes.shared.cli.invoker;
  */
 public interface InvokerLogger {
 
+//    public enum LogThreshold {
+//	FATAL,
+//	ERROR,
+//	WARN,
+//	INFO,
+//	DEBUG
+//    };
+//
     /**
      * The threshold for debug output.
      */

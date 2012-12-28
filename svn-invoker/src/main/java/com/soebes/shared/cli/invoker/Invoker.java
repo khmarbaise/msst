@@ -34,12 +34,6 @@ public interface Invoker {
     String ROLE = Invoker.class.getName();
 
     /**
-     * @deprecated Query this property by yourself, this has nothing to do with
-     *             invoking Maven and as such does not belong into this API!
-     */
-    String userHome = System.getProperty("user.home");
-
-    /**
      * Executes Maven using the parameters specified by the given invocation
      * request. Parameters not specified by the invocation request will be
      * derived from the state of this invoker instance. In case both the invoker
@@ -49,10 +43,10 @@ public interface Invoker {
      * @param request The invocation request to execute, must not be
      *                <code>null</code>.
      * @return The result of the Maven invocation, never <code>null</code>.
-     * @throws MavenInvocationException
+     * @throws SubversionInvocationException
      */
     InvocationResult execute(InvocationRequest request)
-            throws MavenInvocationException;
+            throws SubversionInvocationException;
 
     /**
      * Gets the working directory for the Maven invocation.

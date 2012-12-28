@@ -19,113 +19,92 @@ package com.soebes.shared.cli.invoker;
  * under the License.
  */
 
-import com.soebes.shared.cli.invoker.InvocationRequest.SVNCommands;
-import org.apache.maven.plugin.MojoExecutionException;
-import org.codehaus.plexus.util.StringUtils;
-import org.testng.annotations.Test;
+import static org.fest.assertions.Assertions.assertThat;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URI;
+import java.lang.reflect.Method;
 import java.net.URISyntaxException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collections;
 
-import static org.fest.assertions.Assertions.assertThat;
+import org.apache.maven.plugin.MojoExecutionException;
+import org.codehaus.plexus.util.StringUtils;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
-public class DefaultInvokerTest {
+import com.soebes.shared.cli.invoker.InvocationRequest.SVNCommands;
 
-    private FileLogger setupLogger(File basedir) throws MojoExecutionException,
-            IOException {
-        return new FileLogger(new File(basedir, "build.log"));
+public class DefaultInvokerTest extends TestBase {
+    
+    private Invoker invoker;
+    private InvocationRequest request;
+
+    @BeforeMethod
+    public void beforeMethod(Method method) throws IOException, URISyntaxException, MojoExecutionException {
+	File basedir = getTargetDirFile();
+
+	String logFileNameForTest = StringUtils.addAndDeHump(method.getName());
+
+	System.out.println("Method:" + method.getName()+  " Meta:" + logFileNameForTest);
+
+	invoker = newInvoker();
+
+	request = new DefaultInvocationRequest();
+	request.setBaseDirectory(basedir);
+
+
+	FileLogger flog = setupLogger(basedir, "build-" + logFileNameForTest + ".log");
+	request.setErrorHandler(flog);
+	request.setOutputHandler(flog);
     }
 
     @Test
-    public void testBuildShouldSucceed() throws IOException,
-            MavenInvocationException, URISyntaxException,
-            MojoExecutionException {
-        File basedir = getBasedirForBuild();
+    public void testBuildShouldSucceed() throws IOException, SubversionInvocationException, URISyntaxException, MojoExecutionException {
 
-        Invoker invoker = newInvoker();
+	request.setCommand(SVNCommands.none);
+	request.setShowVersion(true);
 
-        InvocationRequest request = new DefaultInvocationRequest();
-        request.setBaseDirectory(basedir);
+	InvocationResult result = invoker.execute(request);
 
-        FileLogger flog = setupLogger(basedir);
-        request.setErrorHandler(flog);
-        request.setOutputHandler(flog);
-
-        request.setCommand(SVNCommands.none);
-        request.setShowVersion(true);
-
-        InvocationResult result = invoker.execute(request);
-
-        assertThat(result.getExitCode()).isEqualTo(0);
+	assertThat(result.getExitCode()).isEqualTo(0);
 
     }
 
     @Test
-    public void testSvnCommandListShouldSucceed() throws IOException,
-            MavenInvocationException, URISyntaxException,
-            MojoExecutionException {
-        File basedir = getBasedirForBuild();
+    public void testSvnCommandListShouldSucceed() throws IOException, SubversionInvocationException, URISyntaxException, MojoExecutionException {
 
-        Invoker invoker = newInvoker();
+	request.setCommand(SVNCommands.list);
+	request.setParameters(Collections.singletonList("http://svn.apache.org/repos/asf/"));
 
-        InvocationRequest request = new DefaultInvocationRequest();
-        request.setBaseDirectory(basedir);
+	InvocationResult result = invoker.execute(request);
 
-        FileLogger flog = setupLogger(basedir);
-        request.setErrorHandler(flog);
-        request.setOutputHandler(flog);
+	assertThat(result.getExitCode()).isEqualTo(0);
 
-        request.setCommand(SVNCommands.list);
-        request.setShowVersion(false);
-        List<String> parameters = new ArrayList<String>();
-        parameters.add("http://svn.apache.org/repos/asf/");
-        request.setParameters(parameters);
+    }
 
-        InvocationResult result = invoker.execute(request);
+    @Test
+    public void testSvnCommandWhichShouldFailWithAMessageOnStdErr() throws IOException, SubversionInvocationException, URISyntaxException, MojoExecutionException {
 
-        assertThat(result.getExitCode()).isEqualTo(0);
+	request.setCommand(SVNCommands.info);
 
+	InvocationResult result = invoker.execute(request);
+
+	assertThat(result.getExitCode()).isNotEqualTo(0);
+    }
+
+    private FileLogger setupLogger(File basedir, String logFile) throws MojoExecutionException, IOException {
+	return new FileLogger(new File(basedir, logFile));
     }
 
     private Invoker newInvoker() throws IOException {
-        Invoker invoker = new DefaultInvoker();
+	Invoker invoker = new DefaultInvoker();
 
-        InvokerLogger logger = new SystemOutLogger();
+	InvokerLogger logger = new SystemOutLogger();
 
-        logger.setThreshold(InvokerLogger.DEBUG);
-        invoker.setLogger(logger);
+	logger.setThreshold(InvokerLogger.DEBUG);
+	invoker.setLogger(logger);
 
-        return invoker;
+	return invoker;
     }
-
-    private File getBasedirForBuild() throws URISyntaxException {
-        StackTraceElement element = new NullPointerException().getStackTrace()[1];
-        String methodName = element.getMethodName();
-
-        String dirName = StringUtils.addAndDeHump(methodName);
-
-        ClassLoader cloader = Thread.currentThread().getContextClassLoader();
-        URL dirResource = cloader.getResource(dirName);
-
-        // if (dirResource == null) {
-        // throw new IllegalStateException("Project: " + dirName
-        // + " for test method: " + methodName + " is missing.");
-        // }
-        //
-        return new File(new URI(dirResource.toString()).getPath());
-    }
-
-    // this is just a debugging helper for separating unit test output...
-    // private void logTestStart() {
-    // NullPointerException npe = new NullPointerException();
-    // StackTraceElement element = npe.getStackTrace()[1];
-    //
-    // System.out.println("Starting: " + element.getMethodName());
-    // }
 
 }
