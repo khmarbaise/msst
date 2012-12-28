@@ -66,6 +66,7 @@ public class SubversionCommandLineBuilder {
 
         setParameter(request, cli);
 
+        cli.setWorkingDirectory(request.getBaseDirectory());
         return cli;
     }
 

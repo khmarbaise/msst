@@ -75,7 +75,8 @@ public class DefaultInvokerTest extends TestBase {
 
 	request.setCommand(SVNCommands.list);
 	request.setParameters(Collections.singletonList("http://svn.apache.org/repos/asf/"));
-
+	request.setBaseDirectory(getTargetDirFile());
+//	invoker.setWorkingDirectory(getTargetDirFile());
 	InvocationResult result = invoker.execute(request);
 
 	assertThat(result.getExitCode()).isEqualTo(0);
