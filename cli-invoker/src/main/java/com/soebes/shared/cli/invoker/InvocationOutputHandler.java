@@ -28,5 +28,5 @@ import org.codehaus.plexus.util.cli.StreamConsumer;
  *          rfscholte $
  */
 public interface InvocationOutputHandler extends StreamConsumer {
-	// empty by design
+    // empty by design
 }

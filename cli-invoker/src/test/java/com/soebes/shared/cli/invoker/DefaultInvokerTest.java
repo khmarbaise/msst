@@ -44,8 +44,7 @@ import com.soebes.shared.cli.invoker.SystemOutLogger;
 
 public class DefaultInvokerTest extends TestCase {
 
-    public void testBuildShouldSucceed() throws IOException,
-	    MavenInvocationException, URISyntaxException {
+    public void testBuildShouldSucceed() throws IOException, MavenInvocationException, URISyntaxException {
 	File basedir = getBasedirForBuild();
 
 	Invoker invoker = newInvoker();
@@ -66,8 +65,7 @@ public class DefaultInvokerTest extends TestCase {
 	assertEquals(0, result.getExitCode());
     }
 
-    public void testBuildShouldFail() throws IOException,
-	    MavenInvocationException, URISyntaxException {
+    public void testBuildShouldFail() throws IOException, MavenInvocationException, URISyntaxException {
 	File basedir = getBasedirForBuild();
 
 	Invoker invoker = newInvoker();
@@ -122,8 +120,7 @@ public class DefaultInvokerTest extends TestCase {
 	InvocationRequest request = new DefaultInvocationRequest();
 	request.setBaseDirectory(basedir);
 
-	request.setUserSettingsFile(new File(basedir,
-		"settings with spaces.xml"));
+	request.setUserSettingsFile(new File(basedir, "settings with spaces.xml"));
 
 	request.setDebug(true);
 
@@ -147,8 +144,7 @@ public class DefaultInvokerTest extends TestCase {
 	InvocationRequest request = new DefaultInvocationRequest();
 	request.setBaseDirectory(basedir);
 
-	request.setLocalRepositoryDirectory(new File(basedir,
-		"repo with spaces"));
+	request.setLocalRepositoryDirectory(new File(basedir, "repo with spaces"));
 
 	request.setDebug(true);
 
@@ -207,14 +203,11 @@ public class DefaultInvokerTest extends TestCase {
 	String mavenHome = System.getProperty("maven.home");
 
 	if (mavenHome == null) {
-	    mavenHome = CommandLineUtils.getSystemEnvVars().getProperty(
-		    "M2_HOME");
+	    mavenHome = CommandLineUtils.getSystemEnvVars().getProperty("M2_HOME");
 	}
 
 	if (mavenHome == null) {
-	    throw new IllegalStateException(
-		    "Cannot find Maven application "
-			    + "directory. Either specify \'maven.home\' system property, or M2_HOME environment variable.");
+	    throw new IllegalStateException("Cannot find Maven application " + "directory. Either specify \'maven.home\' system property, or M2_HOME environment variable.");
 	}
 
 	return new File(mavenHome);
@@ -240,8 +233,7 @@ public class DefaultInvokerTest extends TestCase {
 	URL dirResource = cloader.getResource(dirName);
 
 	if (dirResource == null) {
-	    throw new IllegalStateException("Project: " + dirName
-		    + " for test method: " + methodName + " is missing.");
+	    throw new IllegalStateException("Project: " + dirName + " for test method: " + methodName + " is missing.");
 	}
 
 	return new File(new URI(dirResource.toString()).getPath());

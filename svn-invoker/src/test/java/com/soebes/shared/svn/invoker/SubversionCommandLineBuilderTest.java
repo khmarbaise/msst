@@ -66,8 +66,7 @@ public class SubversionCommandLineBuilderTest {
     }
 
     @Test
-    public void testSubversionCommandVersion()
-	    throws CommandLineConfigurationException {
+    public void testSubversionCommandVersion() throws CommandLineConfigurationException {
 	SubversionCommandLineBuilder commandLineBuilder = new SubversionCommandLineBuilder();
 
 	DefaultInvocationRequest request = new DefaultInvocationRequest();
@@ -125,14 +124,12 @@ public class SubversionCommandLineBuilderTest {
 	System.out.println("Starting: " + element.getMethodName());
     }
 
-    private static final class TestCommandLineBuilder extends
-	    SubversionCommandLineBuilder {
+    private static final class TestCommandLineBuilder extends SubversionCommandLineBuilder {
 	public void checkRequiredState() throws IOException {
 	    super.checkRequiredState();
 	}
 
-	public File findSVNExecutable()
-		throws CommandLineConfigurationException {
+	public File findSVNExecutable() throws CommandLineConfigurationException {
 	    return super.findSVNExecutable();
 	}
 

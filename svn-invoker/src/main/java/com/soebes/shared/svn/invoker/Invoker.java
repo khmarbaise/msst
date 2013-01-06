@@ -39,18 +39,18 @@ public interface Invoker {
      * derived from the state of this invoker instance. In case both the invoker
      * instance and the invocation request provide a value for a particular
      * option, the value from the invocation request dominates.
-     *
-     * @param request The invocation request to execute, must not be
-     *                <code>null</code>.
+     * 
+     * @param request
+     *            The invocation request to execute, must not be
+     *            <code>null</code>.
      * @return The result of the Maven invocation, never <code>null</code>.
      * @throws SubversionInvocationException
      */
-    InvocationResult execute(InvocationRequest request)
-            throws SubversionInvocationException;
+    InvocationResult execute(InvocationRequest request) throws SubversionInvocationException;
 
     /**
      * Gets the working directory for the Maven invocation.
-     *
+     * 
      * @return The working directory for the Maven invocation or
      *         <code>null</code> if the working directory is derived from the
      *         base directory of the processed POM.
@@ -59,7 +59,7 @@ public interface Invoker {
 
     /**
      * Gets the logger used by this invoker to output diagnostic messages.
-     *
+     * 
      * @return The logger used by this invoker to output diagnostic messages,
      *         never <code>null</code>.
      */
@@ -67,19 +67,21 @@ public interface Invoker {
 
     /**
      * Sets the logger used by this invoker to output diagnostic messages.
-     *
-     * @param logger The logger used by this invoker to output diagnostic messages,
-     *               may be <code>null</code> to use a default logger.
+     * 
+     * @param logger
+     *            The logger used by this invoker to output diagnostic messages,
+     *            may be <code>null</code> to use a default logger.
      * @return This invoker instance.
      */
     Invoker setLogger(InvokerLogger logger);
 
     /**
      * Sets the working directory for the Maven invocation.
-     *
-     * @param workingDirectory The working directory for the Maven invocation, may be
-     *                         <code>null</code> to derive the working directory from the
-     *                         base directory of the processed POM.
+     * 
+     * @param workingDirectory
+     *            The working directory for the Maven invocation, may be
+     *            <code>null</code> to derive the working directory from the
+     *            base directory of the processed POM.
      * @return This invoker instance.
      */
     Invoker setWorkingDirectory(File workingDirectory);
@@ -87,9 +89,10 @@ public interface Invoker {
     /**
      * Sets the input stream used to provide input for the invoked Maven build.
      * This is in particular useful when invoking Maven in interactive mode.
-     *
-     * @param inputStream The input stream used to provide input for the invoked Maven
-     *                    build, may be <code>null</code> if not required.
+     * 
+     * @param inputStream
+     *            The input stream used to provide input for the invoked Maven
+     *            build, may be <code>null</code> if not required.
      * @return This invoker instance.
      */
     Invoker setInputStream(InputStream inputStream);
@@ -97,18 +100,20 @@ public interface Invoker {
     /**
      * Sets the handler used to capture the standard output from the Maven
      * build.
-     *
-     * @param outputHandler The output handler, may be <code>null</code> if the output is
-     *                      not of interest.
+     * 
+     * @param outputHandler
+     *            The output handler, may be <code>null</code> if the output is
+     *            not of interest.
      * @return This invoker instance.
      */
     Invoker setOutputHandler(InvocationOutputHandler outputHandler);
 
     /**
      * Sets the handler used to capture the error output from the Maven build.
-     *
-     * @param errorHandler The error handler, may be <code>null</code> if the output is
-     *                     not of interest.
+     * 
+     * @param errorHandler
+     *            The error handler, may be <code>null</code> if the output is
+     *            not of interest.
      * @return This invoker instance.
      */
     Invoker setErrorHandler(InvocationOutputHandler errorHandler);

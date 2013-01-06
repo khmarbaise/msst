@@ -24,7 +24,7 @@ package com.soebes.shared.svn.invoker;
  * Maven, e.g. illegal invocation arguments. This should not be confused with a
  * failure of the invoked Maven build itself which will be reported by means of
  * a non-zero exit code.
- *
+ * 
  * @version $Id: MavenInvocationException.java 662043 2008-05-31 16:27:02Z
  *          bentmann $
  * @see InvocationResult#getExitCode()
@@ -35,23 +35,26 @@ public class SubversionInvocationException extends Exception {
 
     /**
      * Creates a new exception using the specified detail message and cause.
-     *
-     * @param message The detail message for this exception, may be
-     *                <code>null</code>.
-     * @param cause   The nested exception, may be <code>null</code>.
+     * 
+     * @param message
+     *            The detail message for this exception, may be
+     *            <code>null</code>.
+     * @param cause
+     *            The nested exception, may be <code>null</code>.
      */
     public SubversionInvocationException(String message, Throwable cause) {
-        super(message, cause);
+	super(message, cause);
     }
 
     /**
      * Creates a new exception using the specified detail message.
-     *
-     * @param message The detail message for this exception, may be
-     *                <code>null</code>.
+     * 
+     * @param message
+     *            The detail message for this exception, may be
+     *            <code>null</code>.
      */
     public SubversionInvocationException(String message) {
-        super(message);
+	super(message);
     }
 
 }

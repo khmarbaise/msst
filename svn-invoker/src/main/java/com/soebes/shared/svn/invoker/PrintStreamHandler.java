@@ -24,7 +24,7 @@ import java.io.PrintStream;
 /**
  * Offers an output handler that writes to a print stream like
  * {@link System#out}.
- *
+ * 
  * @version $Id: PrintStreamHandler.java 681956 2008-08-02 11:43:44Z dennisl $
  * @since 2.0.9
  */
@@ -44,34 +44,36 @@ public class PrintStreamHandler implements InvocationOutputHandler {
      * Creates a new output handler that writes to {@link System#out}.
      */
     public PrintStreamHandler() {
-        this(System.out, false);
+	this(System.out, false);
     }
 
     /**
      * Creates a new output handler that writes to the specified print stream.
-     *
-     * @param out         The print stream to write to, must not be <code>null</code>.
-     * @param alwaysFlush A flag whether the print stream should be flushed after each
-     *                    line.
+     * 
+     * @param out
+     *            The print stream to write to, must not be <code>null</code>.
+     * @param alwaysFlush
+     *            A flag whether the print stream should be flushed after each
+     *            line.
      */
     public PrintStreamHandler(PrintStream out, boolean alwaysFlush) {
-        if (out == null) {
-            throw new NullPointerException("missing output stream");
-        }
-        this.out = out;
-        this.alwaysFlush = alwaysFlush;
+	if (out == null) {
+	    throw new NullPointerException("missing output stream");
+	}
+	this.out = out;
+	this.alwaysFlush = alwaysFlush;
     }
 
     public void consumeLine(String line) {
-        if (line == null) {
-            out.println();
-        } else {
-            out.println(line);
-        }
+	if (line == null) {
+	    out.println();
+	} else {
+	    out.println(line);
+	}
 
-        if (alwaysFlush) {
-            out.flush();
-        }
+	if (alwaysFlush) {
+	    out.flush();
+	}
     }
 
 }

@@ -21,7 +21,7 @@ package com.soebes.shared.svn.invoker;
 
 /**
  * Offers a logger that writes to {@link System#out}.
- *
+ * 
  * @version $Id: SystemOutLogger.java 661996 2008-05-31 10:50:38Z bentmann $
  */
 public class SystemOutLogger extends PrintStreamLogger {
@@ -30,7 +30,7 @@ public class SystemOutLogger extends PrintStreamLogger {
      * Creates a new logger with a threshold of {@link #INFO}.
      */
     public SystemOutLogger() {
-        super(System.out, INFO);
+	super(System.out, INFO);
     }
 
 }

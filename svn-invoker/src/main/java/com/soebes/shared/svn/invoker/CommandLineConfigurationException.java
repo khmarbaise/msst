@@ -22,7 +22,7 @@ package com.soebes.shared.svn.invoker;
 /**
  * Signals an error during the construction of the command line used to invoke
  * Maven.
- *
+ * 
  * @version $Id: CommandLineConfigurationException.java 662043 2008-05-31
  *          16:27:02Z bentmann $
  */
@@ -32,23 +32,26 @@ public class CommandLineConfigurationException extends Exception {
 
     /**
      * Creates a new exception using the specified detail message and cause.
-     *
-     * @param message The detail message for this exception, may be
-     *                <code>null</code>.
-     * @param cause   The nested exception, may be <code>null</code>.
+     * 
+     * @param message
+     *            The detail message for this exception, may be
+     *            <code>null</code>.
+     * @param cause
+     *            The nested exception, may be <code>null</code>.
      */
     public CommandLineConfigurationException(String message, Throwable cause) {
-        super(message, cause);
+	super(message, cause);
     }
 
     /**
      * Creates a new exception using the specified detail message.
-     *
-     * @param message The detail message for this exception, may be
-     *                <code>null</code>.
+     * 
+     * @param message
+     *            The detail message for this exception, may be
+     *            <code>null</code>.
      */
     public CommandLineConfigurationException(String message) {
-        super(message);
+	super(message);
     }
 
 }

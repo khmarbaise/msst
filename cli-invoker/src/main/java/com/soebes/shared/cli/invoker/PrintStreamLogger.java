@@ -31,175 +31,175 @@ import java.io.StringWriter;
  */
 public class PrintStreamLogger implements InvokerLogger {
 
-	/**
-	 * The print stream to write to, never <code>null</code>.
-	 */
-	private PrintStream out;
+    /**
+     * The print stream to write to, never <code>null</code>.
+     */
+    private PrintStream out;
 
-	/**
-	 * The threshold used to filter messages.
-	 */
-	private int threshold;
+    /**
+     * The threshold used to filter messages.
+     */
+    private int threshold;
 
-	/**
-	 * Creates a new logger that writes to {@link System#out} and has a
-	 * threshold of {@link #INFO}.
-	 */
-	public PrintStreamLogger() {
-		this(System.out, INFO);
+    /**
+     * Creates a new logger that writes to {@link System#out} and has a
+     * threshold of {@link #INFO}.
+     */
+    public PrintStreamLogger() {
+	this(System.out, INFO);
+    }
+
+    /**
+     * Creates a new logger that writes to the specified print stream.
+     * 
+     * @param out
+     *            The print stream to write to, must not be <code>null</code>.
+     * @param threshold
+     *            The threshold for the logger.
+     */
+    public PrintStreamLogger(PrintStream out, int threshold) {
+	if (out == null) {
+	    throw new NullPointerException("missing output stream");
+	}
+	this.out = out;
+	setThreshold(threshold);
+    }
+
+    /**
+     * Writes the specified message and exception to the print stream.
+     * 
+     * @param level
+     *            The priority level of the message.
+     * @param message
+     *            The message to log, may be <code>null</code>.
+     * @param error
+     *            The exception to log, may be <code>null</code>.
+     */
+    private void log(int level, String message, Throwable error) {
+	if (level > threshold) {
+	    // don't log when it doesn't match your threshold.
+	    return;
 	}
 
-	/**
-	 * Creates a new logger that writes to the specified print stream.
-	 * 
-	 * @param out
-	 *            The print stream to write to, must not be <code>null</code>.
-	 * @param threshold
-	 *            The threshold for the logger.
-	 */
-	public PrintStreamLogger(PrintStream out, int threshold) {
-		if (out == null) {
-			throw new NullPointerException("missing output stream");
-		}
-		this.out = out;
-		setThreshold(threshold);
+	if (message == null && error == null) {
+	    // don't log when there's nothing to log.
+	    return;
 	}
 
-	/**
-	 * Writes the specified message and exception to the print stream.
-	 * 
-	 * @param level
-	 *            The priority level of the message.
-	 * @param message
-	 *            The message to log, may be <code>null</code>.
-	 * @param error
-	 *            The exception to log, may be <code>null</code>.
-	 */
-	private void log(int level, String message, Throwable error) {
-		if (level > threshold) {
-			// don't log when it doesn't match your threshold.
-			return;
-		}
+	StringBuffer buffer = new StringBuffer();
 
-		if (message == null && error == null) {
-			// don't log when there's nothing to log.
-			return;
-		}
-
-		StringBuffer buffer = new StringBuffer();
-
-		switch (level) {
-		case (DEBUG): {
-			buffer.append("[DEBUG]");
-			break;
-		}
-		case (INFO): {
-			buffer.append("[INFO]");
-			break;
-		}
-		case (WARN): {
-			buffer.append("[WARN]");
-			break;
-		}
-		case (ERROR): {
-			buffer.append("[ERROR]");
-			break;
-		}
-		case (FATAL): {
-			buffer.append("[FATAL]");
-			break;
-		}
-		}
-
-		buffer.append(' ');
-
-		if (message != null) {
-			buffer.append(message);
-		}
-
-		if (error != null) {
-			StringWriter writer = new StringWriter();
-			PrintWriter pWriter = new PrintWriter(writer);
-
-			error.printStackTrace(pWriter);
-
-			if (message != null) {
-				buffer.append('\n');
-			}
-
-			buffer.append("Error:\n");
-			buffer.append(writer.toString());
-		}
-
-		out.println(buffer.toString());
+	switch (level) {
+	case (DEBUG): {
+	    buffer.append("[DEBUG]");
+	    break;
+	}
+	case (INFO): {
+	    buffer.append("[INFO]");
+	    break;
+	}
+	case (WARN): {
+	    buffer.append("[WARN]");
+	    break;
+	}
+	case (ERROR): {
+	    buffer.append("[ERROR]");
+	    break;
+	}
+	case (FATAL): {
+	    buffer.append("[FATAL]");
+	    break;
+	}
 	}
 
-	public void debug(String message) {
-		log(DEBUG, message, null);
+	buffer.append(' ');
+
+	if (message != null) {
+	    buffer.append(message);
 	}
 
-	public void debug(String message, Throwable throwable) {
-		log(DEBUG, message, throwable);
+	if (error != null) {
+	    StringWriter writer = new StringWriter();
+	    PrintWriter pWriter = new PrintWriter(writer);
+
+	    error.printStackTrace(pWriter);
+
+	    if (message != null) {
+		buffer.append('\n');
+	    }
+
+	    buffer.append("Error:\n");
+	    buffer.append(writer.toString());
 	}
 
-	public void info(String message) {
-		log(INFO, message, null);
-	}
+	out.println(buffer.toString());
+    }
 
-	public void info(String message, Throwable throwable) {
-		log(INFO, message, throwable);
-	}
+    public void debug(String message) {
+	log(DEBUG, message, null);
+    }
 
-	public void warn(String message) {
-		log(WARN, message, null);
-	}
+    public void debug(String message, Throwable throwable) {
+	log(DEBUG, message, throwable);
+    }
 
-	public void warn(String message, Throwable throwable) {
-		log(WARN, message, throwable);
-	}
+    public void info(String message) {
+	log(INFO, message, null);
+    }
 
-	public void error(String message) {
-		log(ERROR, message, null);
-	}
+    public void info(String message, Throwable throwable) {
+	log(INFO, message, throwable);
+    }
 
-	public void error(String message, Throwable throwable) {
-		log(ERROR, message, throwable);
-	}
+    public void warn(String message) {
+	log(WARN, message, null);
+    }
 
-	public void fatalError(String message) {
-		log(FATAL, message, null);
-	}
+    public void warn(String message, Throwable throwable) {
+	log(WARN, message, throwable);
+    }
 
-	public void fatalError(String message, Throwable throwable) {
-		log(FATAL, message, throwable);
-	}
+    public void error(String message) {
+	log(ERROR, message, null);
+    }
 
-	public boolean isDebugEnabled() {
-		return threshold >= DEBUG;
-	}
+    public void error(String message, Throwable throwable) {
+	log(ERROR, message, throwable);
+    }
 
-	public boolean isErrorEnabled() {
-		return threshold >= ERROR;
-	}
+    public void fatalError(String message) {
+	log(FATAL, message, null);
+    }
 
-	public boolean isFatalErrorEnabled() {
-		return threshold >= FATAL;
-	}
+    public void fatalError(String message, Throwable throwable) {
+	log(FATAL, message, throwable);
+    }
 
-	public boolean isInfoEnabled() {
-		return threshold >= INFO;
-	}
+    public boolean isDebugEnabled() {
+	return threshold >= DEBUG;
+    }
 
-	public boolean isWarnEnabled() {
-		return threshold >= WARN;
-	}
+    public boolean isErrorEnabled() {
+	return threshold >= ERROR;
+    }
 
-	public int getThreshold() {
-		return threshold;
-	}
+    public boolean isFatalErrorEnabled() {
+	return threshold >= FATAL;
+    }
 
-	public void setThreshold(int threshold) {
-		this.threshold = threshold;
-	}
+    public boolean isInfoEnabled() {
+	return threshold >= INFO;
+    }
+
+    public boolean isWarnEnabled() {
+	return threshold >= WARN;
+    }
+
+    public int getThreshold() {
+	return threshold;
+    }
+
+    public void setThreshold(int threshold) {
+	this.threshold = threshold;
+    }
 
 }

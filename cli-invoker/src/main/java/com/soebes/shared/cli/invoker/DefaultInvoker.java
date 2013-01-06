@@ -36,177 +36,164 @@ import org.codehaus.plexus.util.cli.Commandline;
 @Component(role = Invoker.class, hint = "default")
 public class DefaultInvoker implements Invoker {
 
-	public static final String ROLE_HINT = "default";
+    public static final String ROLE_HINT = "default";
 
-	private static final InvokerLogger DEFAULT_LOGGER = new SystemOutLogger();
+    private static final InvokerLogger DEFAULT_LOGGER = new SystemOutLogger();
 
-	private static final InvocationOutputHandler DEFAULT_OUTPUT_HANDLER = new SystemOutHandler();
+    private static final InvocationOutputHandler DEFAULT_OUTPUT_HANDLER = new SystemOutHandler();
 
-	private File localRepositoryDirectory;
+    private File localRepositoryDirectory;
 
-	private InvokerLogger logger = DEFAULT_LOGGER;
+    private InvokerLogger logger = DEFAULT_LOGGER;
 
-	private File workingDirectory;
+    private File workingDirectory;
 
-	private File mavenHome;
+    private File mavenHome;
 
-	private File mavenExecutable;
+    private File mavenExecutable;
 
-	private InvocationOutputHandler outputHandler = DEFAULT_OUTPUT_HANDLER;
+    private InvocationOutputHandler outputHandler = DEFAULT_OUTPUT_HANDLER;
 
-	private InputStream inputStream;
+    private InputStream inputStream;
 
-	private InvocationOutputHandler errorHandler = DEFAULT_OUTPUT_HANDLER;
+    private InvocationOutputHandler errorHandler = DEFAULT_OUTPUT_HANDLER;
 
-	public InvocationResult execute(InvocationRequest request)
-			throws MavenInvocationException {
-		MavenCommandLineBuilder cliBuilder = new MavenCommandLineBuilder();
+    public InvocationResult execute(InvocationRequest request) throws MavenInvocationException {
+	MavenCommandLineBuilder cliBuilder = new MavenCommandLineBuilder();
 
-		InvokerLogger logger = getLogger();
-		if (logger != null) {
-			cliBuilder.setLogger(getLogger());
-		}
-
-		File localRepo = getLocalRepositoryDirectory();
-		if (localRepo != null) {
-			cliBuilder
-					.setLocalRepositoryDirectory(getLocalRepositoryDirectory());
-		}
-
-		File mavenHome = getMavenHome();
-		if (mavenHome != null) {
-			cliBuilder.setMavenHome(getMavenHome());
-		}
-
-		File mavenExecutable = getMavenExecutable();
-		if (mavenExecutable != null) {
-			cliBuilder.setMavenExecutable(mavenExecutable);
-		}
-
-		File workingDirectory = getWorkingDirectory();
-		if (workingDirectory != null) {
-			cliBuilder.setWorkingDirectory(getWorkingDirectory());
-		}
-
-		Commandline cli;
-		try {
-			cli = cliBuilder.build(request);
-		} catch (CommandLineConfigurationException e) {
-			throw new MavenInvocationException(
-					"Error configuring command-line. Reason: " + e.getMessage(),
-					e);
-		}
-
-		DefaultInvocationResult result = new DefaultInvocationResult();
-
-		try {
-			int exitCode = executeCommandLine(cli, request);
-
-			result.setExitCode(exitCode);
-		} catch (CommandLineException e) {
-			result.setExecutionException(e);
-		}
-
-		return result;
+	InvokerLogger logger = getLogger();
+	if (logger != null) {
+	    cliBuilder.setLogger(getLogger());
 	}
 
-	private int executeCommandLine(Commandline cli, InvocationRequest request)
-			throws CommandLineException {
-		int result = Integer.MIN_VALUE;
-
-		InputStream inputStream = request.getInputStream(this.inputStream);
-		InvocationOutputHandler outputHandler = request
-				.getOutputHandler(this.outputHandler);
-		InvocationOutputHandler errorHandler = request
-				.getErrorHandler(this.errorHandler);
-
-		if (getLogger().isDebugEnabled()) {
-			getLogger().debug("Executing: " + cli);
-		}
-		if (request.isInteractive()) {
-			if (inputStream == null) {
-				getLogger()
-						.warn("Maven will be executed in interactive mode"
-								+ ", but no input stream has been configured for this MavenInvoker instance.");
-
-				result = CommandLineUtils.executeCommandLine(cli,
-						outputHandler, errorHandler);
-			} else {
-				result = CommandLineUtils.executeCommandLine(cli, inputStream,
-						outputHandler, errorHandler);
-			}
-		} else {
-			if (inputStream != null) {
-				getLogger()
-						.info("Executing in batch mode. The configured input stream will be ignored.");
-			}
-
-			result = CommandLineUtils.executeCommandLine(cli, outputHandler,
-					errorHandler);
-		}
-
-		return result;
+	File localRepo = getLocalRepositoryDirectory();
+	if (localRepo != null) {
+	    cliBuilder.setLocalRepositoryDirectory(getLocalRepositoryDirectory());
 	}
 
-	public File getLocalRepositoryDirectory() {
-		return localRepositoryDirectory;
+	File mavenHome = getMavenHome();
+	if (mavenHome != null) {
+	    cliBuilder.setMavenHome(getMavenHome());
 	}
 
-	public InvokerLogger getLogger() {
-		return logger;
+	File mavenExecutable = getMavenExecutable();
+	if (mavenExecutable != null) {
+	    cliBuilder.setMavenExecutable(mavenExecutable);
 	}
 
-	public Invoker setLocalRepositoryDirectory(File localRepositoryDirectory) {
-		this.localRepositoryDirectory = localRepositoryDirectory;
-		return this;
+	File workingDirectory = getWorkingDirectory();
+	if (workingDirectory != null) {
+	    cliBuilder.setWorkingDirectory(getWorkingDirectory());
 	}
 
-	public Invoker setLogger(InvokerLogger logger) {
-		this.logger = (logger != null) ? logger : DEFAULT_LOGGER;
-		return this;
+	Commandline cli;
+	try {
+	    cli = cliBuilder.build(request);
+	} catch (CommandLineConfigurationException e) {
+	    throw new MavenInvocationException("Error configuring command-line. Reason: " + e.getMessage(), e);
 	}
 
-	public File getWorkingDirectory() {
-		return workingDirectory;
+	DefaultInvocationResult result = new DefaultInvocationResult();
+
+	try {
+	    int exitCode = executeCommandLine(cli, request);
+
+	    result.setExitCode(exitCode);
+	} catch (CommandLineException e) {
+	    result.setExecutionException(e);
 	}
 
-	public Invoker setWorkingDirectory(File workingDirectory) {
-		this.workingDirectory = workingDirectory;
-		return this;
+	return result;
+    }
+
+    private int executeCommandLine(Commandline cli, InvocationRequest request) throws CommandLineException {
+	int result = Integer.MIN_VALUE;
+
+	InputStream inputStream = request.getInputStream(this.inputStream);
+	InvocationOutputHandler outputHandler = request.getOutputHandler(this.outputHandler);
+	InvocationOutputHandler errorHandler = request.getErrorHandler(this.errorHandler);
+
+	if (getLogger().isDebugEnabled()) {
+	    getLogger().debug("Executing: " + cli);
+	}
+	if (request.isInteractive()) {
+	    if (inputStream == null) {
+		getLogger().warn("Maven will be executed in interactive mode" + ", but no input stream has been configured for this MavenInvoker instance.");
+
+		result = CommandLineUtils.executeCommandLine(cli, outputHandler, errorHandler);
+	    } else {
+		result = CommandLineUtils.executeCommandLine(cli, inputStream, outputHandler, errorHandler);
+	    }
+	} else {
+	    if (inputStream != null) {
+		getLogger().info("Executing in batch mode. The configured input stream will be ignored.");
+	    }
+
+	    result = CommandLineUtils.executeCommandLine(cli, outputHandler, errorHandler);
 	}
 
-	public File getMavenHome() {
-		return mavenHome;
-	}
+	return result;
+    }
 
-	public Invoker setMavenHome(File mavenHome) {
-		this.mavenHome = mavenHome;
+    public File getLocalRepositoryDirectory() {
+	return localRepositoryDirectory;
+    }
 
-		return this;
-	}
+    public InvokerLogger getLogger() {
+	return logger;
+    }
 
-	public File getMavenExecutable() {
-		return mavenExecutable;
-	}
+    public Invoker setLocalRepositoryDirectory(File localRepositoryDirectory) {
+	this.localRepositoryDirectory = localRepositoryDirectory;
+	return this;
+    }
 
-	public Invoker setMavenExecutable(File mavenExecutable) {
-		this.mavenExecutable = mavenExecutable;
-		return this;
-	}
+    public Invoker setLogger(InvokerLogger logger) {
+	this.logger = (logger != null) ? logger : DEFAULT_LOGGER;
+	return this;
+    }
 
-	public Invoker setErrorHandler(InvocationOutputHandler errorHandler) {
-		this.errorHandler = errorHandler;
-		return this;
-	}
+    public File getWorkingDirectory() {
+	return workingDirectory;
+    }
 
-	public Invoker setInputStream(InputStream inputStream) {
-		this.inputStream = inputStream;
-		return this;
-	}
+    public Invoker setWorkingDirectory(File workingDirectory) {
+	this.workingDirectory = workingDirectory;
+	return this;
+    }
 
-	public Invoker setOutputHandler(InvocationOutputHandler outputHandler) {
-		this.outputHandler = outputHandler;
-		return this;
-	}
+    public File getMavenHome() {
+	return mavenHome;
+    }
+
+    public Invoker setMavenHome(File mavenHome) {
+	this.mavenHome = mavenHome;
+
+	return this;
+    }
+
+    public File getMavenExecutable() {
+	return mavenExecutable;
+    }
+
+    public Invoker setMavenExecutable(File mavenExecutable) {
+	this.mavenExecutable = mavenExecutable;
+	return this;
+    }
+
+    public Invoker setErrorHandler(InvocationOutputHandler errorHandler) {
+	this.errorHandler = errorHandler;
+	return this;
+    }
+
+    public Invoker setInputStream(InputStream inputStream) {
+	this.inputStream = inputStream;
+	return this;
+    }
+
+    public Invoker setOutputHandler(InvocationOutputHandler outputHandler) {
+	this.outputHandler = outputHandler;
+	return this;
+    }
 
 }

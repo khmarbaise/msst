@@ -35,429 +35,422 @@ import java.util.Properties;
  */
 public class DefaultInvocationRequest implements InvocationRequest {
 
-	private File basedir;
+    private File basedir;
 
-	private boolean debug;
+    private boolean debug;
 
-	private InvocationOutputHandler errorHandler;
+    private InvocationOutputHandler errorHandler;
 
-	private String failureBehavior = REACTOR_FAIL_FAST;
+    private String failureBehavior = REACTOR_FAIL_FAST;
 
-	private List<String> goals;
+    private List<String> goals;
 
-	private InputStream inputStream;
+    private InputStream inputStream;
 
-	private boolean interactive;
+    private boolean interactive;
 
-	private File localRepository;
+    private File localRepository;
 
-	private boolean offline;
+    private boolean offline;
 
-	private boolean recursive = true;
+    private boolean recursive = true;
 
-	private InvocationOutputHandler outputHandler;
+    private InvocationOutputHandler outputHandler;
 
-	private File pomFile;
+    private File pomFile;
 
-	private Properties properties;
+    private Properties properties;
 
-	private boolean showErrors;
+    private boolean showErrors;
 
-	private boolean updateSnapshots;
+    private boolean updateSnapshots;
 
-	private boolean shellEnvironmentInherited = true;
+    private boolean shellEnvironmentInherited = true;
 
-	private File userSettings;
+    private File userSettings;
 
-	private File globalSettings;
+    private File globalSettings;
 
-	private File toolchains;
+    private File toolchains;
 
-	private String globalChecksumPolicy;
+    private String globalChecksumPolicy;
 
-	private String pomFilename;
+    private String pomFilename;
 
-	private File javaHome;
+    private File javaHome;
 
-	private List<String> profiles;
+    private List<String> profiles;
 
-	private boolean nonPluginUpdates;
+    private boolean nonPluginUpdates;
 
-	private Map<String, String> shellEnvironments;
+    private Map<String, String> shellEnvironments;
 
-	private String mavenOpts;
+    private String mavenOpts;
 
-	private boolean activatedReactor;
+    private boolean activatedReactor;
 
-	private String[] activatedReactorIncludes, activatedReactorExcludes;
+    private String[] activatedReactorIncludes, activatedReactorExcludes;
 
-	private List<String> projects;
+    private List<String> projects;
 
-	private boolean alsoMake;
+    private boolean alsoMake;
 
-	private boolean alsoMakeDependents;
+    private boolean alsoMakeDependents;
 
-	private String resumeFrom;
+    private String resumeFrom;
 
-	private boolean showVersion;
+    private boolean showVersion;
 
-	private String threads;
+    private String threads;
 
-	public InvocationRequest activateReactor(String[] includes,
-			String[] excludes) {
-		activatedReactor = true;
-		activatedReactorIncludes = includes;
-		activatedReactorExcludes = excludes;
-		return this;
-	}
-
-	public File getBaseDirectory() {
-		return basedir;
-	}
-
-	public File getBaseDirectory(File defaultDirectory) {
-		return basedir == null ? defaultDirectory : basedir;
-	}
-
-	public InvocationOutputHandler getErrorHandler(
-			InvocationOutputHandler defaultHandler) {
-		return errorHandler == null ? defaultHandler : errorHandler;
-	}
-
-	public String getFailureBehavior() {
-		return failureBehavior;
-	}
-
-	public List<String> getGoals() {
-		return goals;
-	}
-
-	public InputStream getInputStream(InputStream defaultStream) {
-		return inputStream == null ? defaultStream : inputStream;
-	}
-
-	public File getLocalRepositoryDirectory(File defaultDirectory) {
-		return localRepository == null ? defaultDirectory : localRepository;
-	}
-
-	public InvocationOutputHandler getOutputHandler(
-			InvocationOutputHandler defaultHandler) {
-		return outputHandler == null ? defaultHandler : outputHandler;
-	}
-
-	public File getPomFile() {
-		return pomFile;
-	}
-
-	public Properties getProperties() {
-		return properties;
-	}
-
-	public boolean isDebug() {
-		return debug;
-	}
-
-	public boolean isInteractive() {
-		return interactive;
-	}
-
-	public boolean isOffline() {
-		return offline;
-	}
-
-	public boolean isShowErrors() {
-		return showErrors;
-	}
-
-	public boolean isUpdateSnapshots() {
-		return updateSnapshots;
-	}
-
-	public boolean isRecursive() {
-		return recursive;
-	}
-
-	public InvocationRequest setRecursive(boolean recursive) {
-		this.recursive = recursive;
-		return this;
-	}
-
-	public InvocationRequest setBaseDirectory(File basedir) {
-		this.basedir = basedir;
-		return this;
-	}
-
-	public InvocationRequest setDebug(boolean debug) {
-		this.debug = debug;
-		return this;
-	}
-
-	public InvocationRequest setErrorHandler(
-			InvocationOutputHandler errorHandler) {
-		this.errorHandler = errorHandler;
-		return this;
-	}
-
-	public InvocationRequest setFailureBehavior(String failureBehavior) {
-		this.failureBehavior = failureBehavior;
-		return this;
-	}
-
-	public InvocationRequest setGoals(List<String> goals) {
-		this.goals = goals;
-		return this;
-	}
-
-	public InvocationRequest setInputStream(InputStream inputStream) {
-		this.inputStream = inputStream;
-		return this;
-	}
-
-	public InvocationRequest setInteractive(boolean interactive) {
-		this.interactive = interactive;
-		return this;
-	}
-
-	public InvocationRequest setLocalRepositoryDirectory(File localRepository) {
-		this.localRepository = localRepository;
-		return this;
-	}
-
-	public InvocationRequest setOffline(boolean offline) {
-		this.offline = offline;
-		return this;
-	}
-
-	public InvocationRequest setOutputHandler(
-			InvocationOutputHandler outputHandler) {
-		this.outputHandler = outputHandler;
-		return this;
-	}
-
-	public InvocationRequest setPomFile(File pomFile) {
-		this.pomFile = pomFile;
-		return this;
-	}
-
-	public InvocationRequest setProperties(Properties properties) {
-		this.properties = properties;
-		return this;
-	}
-
-	public InvocationRequest setShowErrors(boolean showErrors) {
-		this.showErrors = showErrors;
-		return this;
-	}
-
-	public InvocationRequest setUpdateSnapshots(boolean updateSnapshots) {
-		this.updateSnapshots = updateSnapshots;
-		return this;
-	}
-
-	public boolean isShellEnvironmentInherited() {
-		return shellEnvironmentInherited;
-	}
+    public InvocationRequest activateReactor(String[] includes, String[] excludes) {
+	activatedReactor = true;
+	activatedReactorIncludes = includes;
+	activatedReactorExcludes = excludes;
+	return this;
+    }
 
-	public InvocationRequest setShellEnvironmentInherited(
-			boolean shellEnvironmentInherited) {
-		this.shellEnvironmentInherited = shellEnvironmentInherited;
-		return this;
-	}
-
-	public File getJavaHome() {
-		return javaHome;
-	}
-
-	public InvocationRequest setJavaHome(File javaHome) {
-		this.javaHome = javaHome;
-		return this;
-	}
-
-	public File getUserSettingsFile() {
-		return userSettings;
-	}
-
-	public InvocationRequest setUserSettingsFile(File userSettings) {
-		this.userSettings = userSettings;
-		return this;
-	}
-
-	public File getGlobalSettingsFile() {
-		return globalSettings;
-	}
-
-	public InvocationRequest setGlobalSettingsFile(File globalSettings) {
-		this.globalSettings = globalSettings;
-		return this;
-	}
-
-	public File getToolchainsFile() {
-		return toolchains;
-	}
-
-	public InvocationRequest setToolchainsFile(File toolchains) {
-		this.toolchains = toolchains;
-		return this;
-	}
-
-	public String getGlobalChecksumPolicy() {
-		return globalChecksumPolicy;
-	}
-
-	public InvocationRequest setGlobalChecksumPolicy(String globalChecksumPolicy) {
-		this.globalChecksumPolicy = globalChecksumPolicy;
-		return this;
-	}
-
-	public String getPomFileName() {
-		return pomFilename;
-	}
-
-	public InvocationRequest setPomFileName(String pomFilename) {
-		this.pomFilename = pomFilename;
-		return this;
-	}
-
-	public List<String> getProfiles() {
-		return profiles;
-	}
-
-	public InvocationRequest setProfiles(List<String> profiles) {
-		this.profiles = profiles;
-		return this;
-	}
-
-	public boolean isNonPluginUpdates() {
-		return nonPluginUpdates;
-	}
-
-	public InvocationRequest setNonPluginUpdates(boolean nonPluginUpdates) {
-		this.nonPluginUpdates = nonPluginUpdates;
-		return this;
-	}
-
-	public InvocationRequest addShellEnvironment(String name, String value) {
-		if (this.shellEnvironmentInherited) {
-			this.shellEnvironments = new HashMap<String, String>();
-		}
-		this.shellEnvironments.put(name, value);
-		return this;
-	}
-
-	public Map<String, String> getShellEnvironments() {
-		return shellEnvironments == null ? Collections
-				.<String, String> emptyMap() : shellEnvironments;
-	}
-
-	public String getMavenOpts() {
-		return mavenOpts;
-	}
-
-	public InvocationRequest setMavenOpts(String mavenOpts) {
-		this.mavenOpts = mavenOpts;
-		return this;
-	}
-
-	public boolean isActivatedReactor() {
-		return activatedReactor;
-	}
-
-	public String[] getActivatedReactorIncludes() {
-		return activatedReactorIncludes;
-	}
-
-	public String[] getActivatedReactorExcludes() {
-		return activatedReactorExcludes;
-	}
-
-	/**
-	 * @see com.soebes.shared.cli.invoker.InvocationRequest#isShowVersion()
-	 */
-	public boolean isShowVersion() {
-		return this.showVersion;
-	}
-
-	/**
-	 * @see com.soebes.shared.cli.invoker.InvocationRequest#setShowVersion(boolean)
-	 */
-	public InvocationRequest setShowVersion(boolean showVersion) {
-		this.showVersion = showVersion;
-		return this;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public String getThreads() {
-		return threads;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public InvocationRequest setThreads(String threads) {
-		this.threads = threads;
-		return this;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public List<String> getProjects() {
-		return projects;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public InvocationRequest setProjects(List<String> projects) {
-		this.projects = projects;
-		return this;
-	}
+    public File getBaseDirectory() {
+	return basedir;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public boolean isAlsoMake() {
-		return alsoMake;
-	}
+    public File getBaseDirectory(File defaultDirectory) {
+	return basedir == null ? defaultDirectory : basedir;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public InvocationRequest setAlsoMake(boolean alsoMake) {
-		this.alsoMake = alsoMake;
-		return this;
-	}
+    public InvocationOutputHandler getErrorHandler(InvocationOutputHandler defaultHandler) {
+	return errorHandler == null ? defaultHandler : errorHandler;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public boolean isAlsoMakeDependents() {
-		return alsoMakeDependents;
-	}
+    public String getFailureBehavior() {
+	return failureBehavior;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public InvocationRequest setAlsoMakeDependents(boolean alsoMakeDependents) {
-		this.alsoMakeDependents = alsoMakeDependents;
-		return this;
-	}
+    public List<String> getGoals() {
+	return goals;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public String getResumeFrom() {
-		return resumeFrom;
-	}
+    public InputStream getInputStream(InputStream defaultStream) {
+	return inputStream == null ? defaultStream : inputStream;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public InvocationRequest setResumeFrom(String resumeFrom) {
-		this.resumeFrom = resumeFrom;
-		return this;
-	}
+    public File getLocalRepositoryDirectory(File defaultDirectory) {
+	return localRepository == null ? defaultDirectory : localRepository;
+    }
+
+    public InvocationOutputHandler getOutputHandler(InvocationOutputHandler defaultHandler) {
+	return outputHandler == null ? defaultHandler : outputHandler;
+    }
+
+    public File getPomFile() {
+	return pomFile;
+    }
+
+    public Properties getProperties() {
+	return properties;
+    }
+
+    public boolean isDebug() {
+	return debug;
+    }
+
+    public boolean isInteractive() {
+	return interactive;
+    }
+
+    public boolean isOffline() {
+	return offline;
+    }
+
+    public boolean isShowErrors() {
+	return showErrors;
+    }
+
+    public boolean isUpdateSnapshots() {
+	return updateSnapshots;
+    }
+
+    public boolean isRecursive() {
+	return recursive;
+    }
+
+    public InvocationRequest setRecursive(boolean recursive) {
+	this.recursive = recursive;
+	return this;
+    }
+
+    public InvocationRequest setBaseDirectory(File basedir) {
+	this.basedir = basedir;
+	return this;
+    }
+
+    public InvocationRequest setDebug(boolean debug) {
+	this.debug = debug;
+	return this;
+    }
+
+    public InvocationRequest setErrorHandler(InvocationOutputHandler errorHandler) {
+	this.errorHandler = errorHandler;
+	return this;
+    }
+
+    public InvocationRequest setFailureBehavior(String failureBehavior) {
+	this.failureBehavior = failureBehavior;
+	return this;
+    }
+
+    public InvocationRequest setGoals(List<String> goals) {
+	this.goals = goals;
+	return this;
+    }
+
+    public InvocationRequest setInputStream(InputStream inputStream) {
+	this.inputStream = inputStream;
+	return this;
+    }
+
+    public InvocationRequest setInteractive(boolean interactive) {
+	this.interactive = interactive;
+	return this;
+    }
+
+    public InvocationRequest setLocalRepositoryDirectory(File localRepository) {
+	this.localRepository = localRepository;
+	return this;
+    }
+
+    public InvocationRequest setOffline(boolean offline) {
+	this.offline = offline;
+	return this;
+    }
+
+    public InvocationRequest setOutputHandler(InvocationOutputHandler outputHandler) {
+	this.outputHandler = outputHandler;
+	return this;
+    }
+
+    public InvocationRequest setPomFile(File pomFile) {
+	this.pomFile = pomFile;
+	return this;
+    }
+
+    public InvocationRequest setProperties(Properties properties) {
+	this.properties = properties;
+	return this;
+    }
+
+    public InvocationRequest setShowErrors(boolean showErrors) {
+	this.showErrors = showErrors;
+	return this;
+    }
+
+    public InvocationRequest setUpdateSnapshots(boolean updateSnapshots) {
+	this.updateSnapshots = updateSnapshots;
+	return this;
+    }
+
+    public boolean isShellEnvironmentInherited() {
+	return shellEnvironmentInherited;
+    }
+
+    public InvocationRequest setShellEnvironmentInherited(boolean shellEnvironmentInherited) {
+	this.shellEnvironmentInherited = shellEnvironmentInherited;
+	return this;
+    }
+
+    public File getJavaHome() {
+	return javaHome;
+    }
+
+    public InvocationRequest setJavaHome(File javaHome) {
+	this.javaHome = javaHome;
+	return this;
+    }
+
+    public File getUserSettingsFile() {
+	return userSettings;
+    }
+
+    public InvocationRequest setUserSettingsFile(File userSettings) {
+	this.userSettings = userSettings;
+	return this;
+    }
+
+    public File getGlobalSettingsFile() {
+	return globalSettings;
+    }
+
+    public InvocationRequest setGlobalSettingsFile(File globalSettings) {
+	this.globalSettings = globalSettings;
+	return this;
+    }
+
+    public File getToolchainsFile() {
+	return toolchains;
+    }
+
+    public InvocationRequest setToolchainsFile(File toolchains) {
+	this.toolchains = toolchains;
+	return this;
+    }
+
+    public String getGlobalChecksumPolicy() {
+	return globalChecksumPolicy;
+    }
+
+    public InvocationRequest setGlobalChecksumPolicy(String globalChecksumPolicy) {
+	this.globalChecksumPolicy = globalChecksumPolicy;
+	return this;
+    }
+
+    public String getPomFileName() {
+	return pomFilename;
+    }
+
+    public InvocationRequest setPomFileName(String pomFilename) {
+	this.pomFilename = pomFilename;
+	return this;
+    }
+
+    public List<String> getProfiles() {
+	return profiles;
+    }
+
+    public InvocationRequest setProfiles(List<String> profiles) {
+	this.profiles = profiles;
+	return this;
+    }
+
+    public boolean isNonPluginUpdates() {
+	return nonPluginUpdates;
+    }
+
+    public InvocationRequest setNonPluginUpdates(boolean nonPluginUpdates) {
+	this.nonPluginUpdates = nonPluginUpdates;
+	return this;
+    }
+
+    public InvocationRequest addShellEnvironment(String name, String value) {
+	if (this.shellEnvironmentInherited) {
+	    this.shellEnvironments = new HashMap<String, String>();
+	}
+	this.shellEnvironments.put(name, value);
+	return this;
+    }
+
+    public Map<String, String> getShellEnvironments() {
+	return shellEnvironments == null ? Collections.<String, String> emptyMap() : shellEnvironments;
+    }
+
+    public String getMavenOpts() {
+	return mavenOpts;
+    }
+
+    public InvocationRequest setMavenOpts(String mavenOpts) {
+	this.mavenOpts = mavenOpts;
+	return this;
+    }
+
+    public boolean isActivatedReactor() {
+	return activatedReactor;
+    }
+
+    public String[] getActivatedReactorIncludes() {
+	return activatedReactorIncludes;
+    }
+
+    public String[] getActivatedReactorExcludes() {
+	return activatedReactorExcludes;
+    }
+
+    /**
+     * @see com.soebes.shared.cli.invoker.InvocationRequest#isShowVersion()
+     */
+    public boolean isShowVersion() {
+	return this.showVersion;
+    }
+
+    /**
+     * @see com.soebes.shared.cli.invoker.InvocationRequest#setShowVersion(boolean)
+     */
+    public InvocationRequest setShowVersion(boolean showVersion) {
+	this.showVersion = showVersion;
+	return this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public String getThreads() {
+	return threads;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public InvocationRequest setThreads(String threads) {
+	this.threads = threads;
+	return this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public List<String> getProjects() {
+	return projects;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public InvocationRequest setProjects(List<String> projects) {
+	this.projects = projects;
+	return this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public boolean isAlsoMake() {
+	return alsoMake;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public InvocationRequest setAlsoMake(boolean alsoMake) {
+	this.alsoMake = alsoMake;
+	return this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public boolean isAlsoMakeDependents() {
+	return alsoMakeDependents;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public InvocationRequest setAlsoMakeDependents(boolean alsoMakeDependents) {
+	this.alsoMakeDependents = alsoMakeDependents;
+	return this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public String getResumeFrom() {
+	return resumeFrom;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public InvocationRequest setResumeFrom(String resumeFrom) {
+	this.resumeFrom = resumeFrom;
+	return this;
+    }
 
 }
