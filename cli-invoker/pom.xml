@@ -23,29 +23,17 @@ under the License.
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.apache.maven.shared</groupId>
-    <artifactId>maven-shared-components</artifactId>
-    <version>18</version>
-    <relativePath>../maven-shared-components/pom.xml</relativePath>
+    <groupId>com.soebes.shared</groupId>
+    <artifactId>shared-parent</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
   </parent>
 
-  <groupId>com.soebes.maven.invoker</groupId>
+  <groupId>com.soebes.shared.invoker</groupId>
   <artifactId>cli-invoker</artifactId>
-  <version>1.0.0-SNAPSHOT</version>
 
   <name>Command Line Interface Invoker</name>
   <description>A component to programmatically invoke a Shell/Bash/Script etc.</description>
 
-  <scm>
-    <connection>scm:svn:http://svn.apache.org/repos/asf/maven/shared/tags/maven-invoker-2.1.1</connection>
-    <developerConnection>scm:svn:https://svn.apache.org/repos/asf/maven/shared/tags/maven-invoker-2.1.1</developerConnection>
-    <url>http://svn.apache.org/viewvc/maven/shared/tags/maven-invoker-2.1.1</url>
-  </scm>
-  <issueManagement>
-    <system>jira</system>
-    <url>http://jira.codehaus.org/browse/MSHARED/component/13271</url>
-  </issueManagement>
-  
   <contributors>
     <contributor>
       <name>Lucien Weller</name>

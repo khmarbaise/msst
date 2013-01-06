@@ -44,7 +44,7 @@ import com.soebes.shared.svn.invoker.SystemOutLogger;
 import com.soebes.shared.svn.invoker.InvocationRequest.SVNCommands;
 
 public class DefaultInvokerTest extends TestBase {
-    
+
     private Invoker invoker;
     private InvocationRequest request;
 

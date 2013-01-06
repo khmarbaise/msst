@@ -19,28 +19,16 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.apache.maven.shared</groupId>
-    <artifactId>maven-shared-components</artifactId>
-    <version>18</version>
-    <relativePath>../maven-shared-components/pom.xml</relativePath>
+    <groupId>com.soebes.shared</groupId>
+    <artifactId>shared-parent</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
   </parent>
 
   <groupId>com.soebes.shared.invoker</groupId>
   <artifactId>svn-invoker</artifactId>
-  <version>1.0.0-SNAPSHOT</version>
 
   <name>SVN Invoker</name>
   <description>A component to programmatically invoke svn</description>
-
-  <scm>
-    <connection>scm:git:git@github.com:khmarbaise/msst.git</connection>
-    <developerConnection>scm:git:git@github.com:khmarbaise/msst.git</developerConnection>
-    <url>http://site.soebes.com/</url>
-  </scm>
-  <issueManagement>
-    <system>github</system>
-    <url>https://github.com/khmarbaise/msst/issues</url>
-  </issueManagement>
 
   <contributors>
     <contributor>
@@ -64,20 +52,17 @@
     <dependency>
       <groupId>org.testng</groupId>
       <artifactId>testng</artifactId>
-      <version>6.3.1</version>
       <scope>test</scope>
     </dependency>
 
     <dependency>
       <groupId>org.easytesting</groupId>
       <artifactId>fest-assert</artifactId>
-      <version>1.4</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>com.google.guava</groupId>
       <artifactId>guava</artifactId>
-      <version>13.0.1</version>
       <scope>test</scope>
     </dependency>
     <dependency>
