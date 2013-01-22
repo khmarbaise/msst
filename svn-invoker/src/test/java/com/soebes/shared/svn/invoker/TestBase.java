@@ -23,15 +23,15 @@ public class TestBase {
      * @return The absolute location for the given name.
      */
     public String getFileResource(String name) {
-	URL url = this.getClass().getResource(name);
-	if (url != null) {
-	    return url.getFile();
-	} else {
-	    // We have a file which does not exists
-	    // We got the path
-	    url = this.getClass().getResource(".");
-	    return url.getFile() + name;
-	}
+        URL url = this.getClass().getResource(name);
+        if (url != null) {
+            return url.getFile();
+        } else {
+            // We have a file which does not exists
+            // We got the path
+            url = this.getClass().getResource(".");
+            return url.getFile() + name;
+        }
     }
 
     /**
@@ -40,18 +40,18 @@ public class TestBase {
      * @return The base folder.
      */
     public String getMavenBaseDir() {
-	// basedir is defined by Maven
-	// but the above will not work under Eclipse.
-	// So there I'M using user.dir
-	return System.getProperty("basedir", System.getProperty("user.dir", "."));
+        // basedir is defined by Maven
+        // but the above will not work under Eclipse.
+        // So there I'M using user.dir
+        return System.getProperty("basedir", System.getProperty("user.dir", "."));
     }
 
     public File getMavenBaseDirFile() {
-	return new File(getMavenBaseDir());
+        return new File(getMavenBaseDir());
     }
 
     public File getTargetDirFile() {
-	return new File(getTargetDir());
+        return new File(getTargetDir());
     }
 
     /**
@@ -60,7 +60,7 @@ public class TestBase {
      * @return The target folder.
      */
     public String getTargetDir() {
-	return getMavenBaseDir() + File.separatorChar + "target" + File.separator;
+        return getMavenBaseDir() + File.separatorChar + "target" + File.separator;
     }
 
     /**
@@ -69,7 +69,7 @@ public class TestBase {
      * @return The string
      */
     public String getSrcDirectory() {
-	return getMavenBaseDir() + File.separator + "src";
+        return getMavenBaseDir() + File.separator + "src";
     }
 
     /**
@@ -79,7 +79,7 @@ public class TestBase {
      */
 
     public String getTestDirectory() {
-	return getSrcDirectory() + File.separator + "test";
+        return getSrcDirectory() + File.separator + "test";
     }
 
     /**
@@ -88,7 +88,7 @@ public class TestBase {
      * @return The string representing the folder.
      */
     public String getTestResourcesDirectory() {
-	return getTestDirectory() + File.separator + "resources" + File.separator;
+        return getTestDirectory() + File.separator + "resources" + File.separator;
     }
 
 }

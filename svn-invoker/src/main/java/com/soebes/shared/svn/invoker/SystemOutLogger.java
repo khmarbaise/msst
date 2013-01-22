@@ -30,7 +30,7 @@ public class SystemOutLogger extends PrintStreamLogger {
      * Creates a new logger with a threshold of {@link #INFO}.
      */
     public SystemOutLogger() {
-	super(System.out, INFO);
+        super(System.out, INFO);
     }
 
 }

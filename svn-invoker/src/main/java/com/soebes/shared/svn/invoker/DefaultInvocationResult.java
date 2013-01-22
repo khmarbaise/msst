@@ -41,15 +41,15 @@ public final class DefaultInvocationResult implements InvocationResult {
      * Creates a new invocation result
      */
     DefaultInvocationResult() {
-	// hide constructor
+        // hide constructor
     }
 
     public int getExitCode() {
-	return exitCode;
+        return exitCode;
     }
 
     public CommandLineException getExecutionException() {
-	return executionException;
+        return executionException;
     }
 
     /**
@@ -59,7 +59,7 @@ public final class DefaultInvocationResult implements InvocationResult {
      *            The exit code reported by the SVN invocation.
      */
     void setExitCode(int exitCode) {
-	this.exitCode = exitCode;
+        this.exitCode = exitCode;
     }
 
     /**
@@ -70,7 +70,7 @@ public final class DefaultInvocationResult implements InvocationResult {
      *            be <code>null</code>.
      */
     void setExecutionException(CommandLineException executionException) {
-	this.executionException = executionException;
+        this.executionException = executionException;
     }
 
 }

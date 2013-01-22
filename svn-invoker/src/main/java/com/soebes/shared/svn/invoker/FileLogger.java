@@ -17,7 +17,7 @@ class FileLogger extends org.apache.maven.shared.scriptinterpreter.FileLogger im
      *             If the output file could not be created.
      */
     public FileLogger(File outputFile) throws IOException {
-	super(outputFile, null);
+        super(outputFile, null);
     }
 
     /**
@@ -33,7 +33,7 @@ class FileLogger extends org.apache.maven.shared.scriptinterpreter.FileLogger im
      *             If the output file could not be created.
      */
     public FileLogger(File outputFile, Log log) throws IOException {
-	super(outputFile, log);
+        super(outputFile, log);
     }
 
 }

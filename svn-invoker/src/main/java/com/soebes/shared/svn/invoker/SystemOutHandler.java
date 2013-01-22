@@ -30,7 +30,7 @@ public class SystemOutHandler extends PrintStreamHandler {
      * Creates a new output handler.
      */
     public SystemOutHandler() {
-	this(false);
+        this(false);
     }
 
     /**
@@ -41,7 +41,7 @@ public class SystemOutHandler extends PrintStreamHandler {
      *            line.
      */
     public SystemOutHandler(boolean alwaysFlush) {
-	super(System.out, alwaysFlush);
+        super(System.out, alwaysFlush);
     }
 
 }

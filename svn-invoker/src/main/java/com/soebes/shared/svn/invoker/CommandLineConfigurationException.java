@@ -40,7 +40,7 @@ public class CommandLineConfigurationException extends Exception {
      *            The nested exception, may be <code>null</code>.
      */
     public CommandLineConfigurationException(String message, Throwable cause) {
-	super(message, cause);
+        super(message, cause);
     }
 
     /**
@@ -51,7 +51,7 @@ public class CommandLineConfigurationException extends Exception {
      *            <code>null</code>.
      */
     public CommandLineConfigurationException(String message) {
-	super(message);
+        super(message);
     }
 
 }

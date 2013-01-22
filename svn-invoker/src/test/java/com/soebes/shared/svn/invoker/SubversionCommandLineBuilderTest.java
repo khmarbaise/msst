@@ -46,96 +46,96 @@ public class SubversionCommandLineBuilderTest {
 
     @Test(expectedExceptions = { IllegalStateException.class })
     public void testShouldFailIfLoggerSetToNull() throws IOException {
-	logTestStart();
+        logTestStart();
 
-	TestCommandLineBuilder tclb = new TestCommandLineBuilder();
-	tclb.setLogger(null);
-	tclb.checkRequiredState();
+        TestCommandLineBuilder tclb = new TestCommandLineBuilder();
+        tclb.setLogger(null);
+        tclb.checkRequiredState();
 
     }
 
     @Test
     public void testSubversionCommand() throws Exception {
-	SubversionCommandLineBuilder commandLineBuilder = new SubversionCommandLineBuilder();
-	File subversionExecutable = new File("svn");
-	commandLineBuilder.setSubversionExecutable(subversionExecutable);
-	File executable = commandLineBuilder.findSVNExecutable();
-	System.out.println("Exe:" + executable.getAbsolutePath());
-	assertThat(executable.exists()).isTrue();
-	assertThat(executable.isAbsolute()).isTrue();
+        SubversionCommandLineBuilder commandLineBuilder = new SubversionCommandLineBuilder();
+        File subversionExecutable = new File("svn");
+        commandLineBuilder.setSubversionExecutable(subversionExecutable);
+        File executable = commandLineBuilder.findSVNExecutable();
+        System.out.println("Exe:" + executable.getAbsolutePath());
+        assertThat(executable.exists()).isTrue();
+        assertThat(executable.isAbsolute()).isTrue();
     }
 
     @Test
     public void testSubversionCommandVersion() throws CommandLineConfigurationException {
-	SubversionCommandLineBuilder commandLineBuilder = new SubversionCommandLineBuilder();
+        SubversionCommandLineBuilder commandLineBuilder = new SubversionCommandLineBuilder();
 
-	DefaultInvocationRequest request = new DefaultInvocationRequest();
-	request.setCommand(SVNCommands.none);
-	request.setShowVersion(true);
+        DefaultInvocationRequest request = new DefaultInvocationRequest();
+        request.setCommand(SVNCommands.none);
+        request.setShowVersion(true);
 
-	Commandline cli = commandLineBuilder.build(request);
+        Commandline cli = commandLineBuilder.build(request);
 
-	System.out.println("CLI: " + Joiner.on(" ").join(cli.getCommandline()));
+        System.out.println("CLI: " + Joiner.on(" ").join(cli.getCommandline()));
     }
 
     @Test
     public void testSubversionList() throws CommandLineConfigurationException {
-	SubversionCommandLineBuilder commandLineBuilder = new SubversionCommandLineBuilder();
+        SubversionCommandLineBuilder commandLineBuilder = new SubversionCommandLineBuilder();
 
-	DefaultInvocationRequest request = new DefaultInvocationRequest();
-	request.setCommand(SVNCommands.list);
-	request.setShowVersion(false);
-	List<String> parameters = new ArrayList<String>();
-	parameters.add("http://svn.apache.org/repos/asf/");
-	request.setParameters(parameters);
+        DefaultInvocationRequest request = new DefaultInvocationRequest();
+        request.setCommand(SVNCommands.list);
+        request.setShowVersion(false);
+        List<String> parameters = new ArrayList<String>();
+        parameters.add("http://svn.apache.org/repos/asf/");
+        request.setParameters(parameters);
 
-	Commandline cli = commandLineBuilder.build(request);
+        Commandline cli = commandLineBuilder.build(request);
 
-	System.out.println("CLI: " + Joiner.on(" ").join(cli.getCommandline()));
+        System.out.println("CLI: " + Joiner.on(" ").join(cli.getCommandline()));
     }
 
     public void setUp() {
-	sysProps = System.getProperties();
+        sysProps = System.getProperties();
 
-	Properties p = new Properties(sysProps);
+        Properties p = new Properties(sysProps);
 
-	System.setProperties(p);
+        System.setProperties(p);
     }
 
     public void tearDown() throws IOException {
-	System.setProperties(sysProps);
+        System.setProperties(sysProps);
 
-	for (File file : toDelete) {
-	    if (file.exists()) {
-		if (file.isDirectory()) {
-		    FileUtils.deleteDirectory(file);
-		} else {
-		    file.delete();
-		}
-	    }
-	}
+        for (File file : toDelete) {
+            if (file.exists()) {
+                if (file.isDirectory()) {
+                    FileUtils.deleteDirectory(file);
+                } else {
+                    file.delete();
+                }
+            }
+        }
     }
 
     // this is just a debugging helper for separating unit test output...
     private void logTestStart() {
-	NullPointerException npe = new NullPointerException();
-	StackTraceElement element = npe.getStackTrace()[1];
+        NullPointerException npe = new NullPointerException();
+        StackTraceElement element = npe.getStackTrace()[1];
 
-	System.out.println("Starting: " + element.getMethodName());
+        System.out.println("Starting: " + element.getMethodName());
     }
 
     private static final class TestCommandLineBuilder extends SubversionCommandLineBuilder {
-	public void checkRequiredState() throws IOException {
-	    super.checkRequiredState();
-	}
+        public void checkRequiredState() throws IOException {
+            super.checkRequiredState();
+        }
 
-	public File findSVNExecutable() throws CommandLineConfigurationException {
-	    return super.findSVNExecutable();
-	}
+        public File findSVNExecutable() throws CommandLineConfigurationException {
+            return super.findSVNExecutable();
+        }
 
-	public void setFlags(InvocationRequest request, Commandline cli) {
-	    super.setFlags(request, cli);
-	}
+        public void setFlags(InvocationRequest request, Commandline cli) {
+            super.setFlags(request, cli);
+        }
 
     }
 

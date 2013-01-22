@@ -43,7 +43,7 @@ public class SubversionInvocationException extends Exception {
      *            The nested exception, may be <code>null</code>.
      */
     public SubversionInvocationException(String message, Throwable cause) {
-	super(message, cause);
+        super(message, cause);
     }
 
     /**
@@ -54,7 +54,7 @@ public class SubversionInvocationException extends Exception {
      *            <code>null</code>.
      */
     public SubversionInvocationException(String message) {
-	super(message);
+        super(message);
     }
 
 }

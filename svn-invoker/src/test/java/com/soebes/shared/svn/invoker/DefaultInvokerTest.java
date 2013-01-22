@@ -50,66 +50,69 @@ public class DefaultInvokerTest extends TestBase {
 
     @BeforeMethod
     public void beforeMethod(Method method) throws IOException, URISyntaxException, MojoExecutionException {
-	File basedir = getTargetDirFile();
+        File basedir = getTargetDirFile();
 
-	String logFileNameForTest = StringUtils.addAndDeHump(method.getName());
+        String logFileNameForTest = StringUtils.addAndDeHump(method.getName());
 
-	invoker = newInvoker();
+        invoker = newInvoker();
 
-	request = new DefaultInvocationRequest();
-	request.setBaseDirectory(basedir);
+        request = new DefaultInvocationRequest();
+        request.setBaseDirectory(basedir);
 
-	FileLogger flog = setupLogger(basedir, "build-" + logFileNameForTest + ".log");
-	request.setErrorHandler(flog);
-	request.setOutputHandler(flog);
+        FileLogger flog = setupLogger(basedir, "build-" + logFileNameForTest + ".log");
+        request.setErrorHandler(flog);
+        request.setOutputHandler(flog);
     }
 
     @Test
-    public void testBuildShouldSucceed() throws IOException, SubversionInvocationException, URISyntaxException, MojoExecutionException {
+    public void testBuildShouldSucceed() throws IOException, SubversionInvocationException, URISyntaxException,
+            MojoExecutionException {
 
-	request.setCommand(SVNCommands.none);
-	request.setShowVersion(true);
+        request.setCommand(SVNCommands.none);
+        request.setShowVersion(true);
 
-	InvocationResult result = invoker.execute(request);
+        InvocationResult result = invoker.execute(request);
 
-	assertThat(result.getExitCode()).isEqualTo(0);
-
-    }
-
-    @Test
-    public void testSvnCommandListShouldSucceed() throws IOException, SubversionInvocationException, URISyntaxException, MojoExecutionException {
-
-	request.setCommand(SVNCommands.list);
-	request.setParameters(Collections.singletonList("http://svn.apache.org/repos/asf/"));
-	InvocationResult result = invoker.execute(request);
-
-	assertThat(result.getExitCode()).isEqualTo(0);
+        assertThat(result.getExitCode()).isEqualTo(0);
 
     }
 
     @Test
-    public void testSvnCommandWhichShouldFailWithAMessageOnStdErr() throws IOException, SubversionInvocationException, URISyntaxException, MojoExecutionException {
+    public void testSvnCommandListShouldSucceed() throws IOException, SubversionInvocationException, URISyntaxException,
+            MojoExecutionException {
 
-	request.setCommand(SVNCommands.info);
+        request.setCommand(SVNCommands.list);
+        request.setParameters(Collections.singletonList("http://svn.apache.org/repos/asf/"));
+        InvocationResult result = invoker.execute(request);
 
-	InvocationResult result = invoker.execute(request);
+        assertThat(result.getExitCode()).isEqualTo(0);
 
-	assertThat(result.getExitCode()).isNotEqualTo(0);
+    }
+
+    @Test
+    public void testSvnCommandWhichShouldFailWithAMessageOnStdErr() throws IOException, SubversionInvocationException,
+            URISyntaxException, MojoExecutionException {
+
+        request.setCommand(SVNCommands.info);
+
+        InvocationResult result = invoker.execute(request);
+
+        assertThat(result.getExitCode()).isNotEqualTo(0);
     }
 
     private FileLogger setupLogger(File basedir, String logFile) throws MojoExecutionException, IOException {
-	return new FileLogger(new File(basedir, logFile));
+        return new FileLogger(new File(basedir, logFile));
     }
 
     private Invoker newInvoker() throws IOException {
-	Invoker invoker = new DefaultInvoker();
+        Invoker invoker = new DefaultInvoker();
 
-	InvokerLogger logger = new SystemOutLogger();
+        InvokerLogger logger = new SystemOutLogger();
 
-	logger.setThreshold(InvokerLogger.DEBUG);
-	invoker.setLogger(logger);
+        logger.setThreshold(InvokerLogger.DEBUG);
+        invoker.setLogger(logger);
 
-	return invoker;
+        return invoker;
     }
 
 }

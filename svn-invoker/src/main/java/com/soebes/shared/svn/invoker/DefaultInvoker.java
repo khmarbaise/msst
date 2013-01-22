@@ -53,103 +53,105 @@ public class DefaultInvoker implements Invoker {
     private InvocationOutputHandler errorHandler = DEFAULT_OUTPUT_HANDLER;
 
     public InvocationResult execute(InvocationRequest request) throws SubversionInvocationException {
-	SubversionCommandLineBuilder cliBuilder = new SubversionCommandLineBuilder();
+        SubversionCommandLineBuilder cliBuilder = new SubversionCommandLineBuilder();
 
-	InvokerLogger logger = getLogger();
-	if (logger != null) {
-	    cliBuilder.setLogger(getLogger());
-	}
+        InvokerLogger logger = getLogger();
+        if (logger != null) {
+            cliBuilder.setLogger(getLogger());
+        }
 
-	// File mavenExecutable = getMavenExecutable();
-	// if (mavenExecutable != null) {
-	// cliBuilder.setSubversionExecutable(mavenExecutable);
-	// }
+        // File mavenExecutable = getMavenExecutable();
+        // if (mavenExecutable != null) {
+        // cliBuilder.setSubversionExecutable(mavenExecutable);
+        // }
 
-	File workingDirectory = getWorkingDirectory();
-	if (workingDirectory != null) {
-	    cliBuilder.setWorkingDirectory(getWorkingDirectory());
-	}
+        File workingDirectory = getWorkingDirectory();
+        if (workingDirectory != null) {
+            cliBuilder.setWorkingDirectory(getWorkingDirectory());
+        }
 
-	Commandline cli;
-	try {
-	    cli = cliBuilder.build(request);
-	} catch (CommandLineConfigurationException e) {
-	    throw new SubversionInvocationException("Error configuring command-line. Reason: " + e.getMessage(), e);
-	}
+        Commandline cli;
+        try {
+            cli = cliBuilder.build(request);
+        } catch (CommandLineConfigurationException e) {
+            throw new SubversionInvocationException("Error configuring command-line. Reason: " + e.getMessage(), e);
+        }
 
-	DefaultInvocationResult result = new DefaultInvocationResult();
+        DefaultInvocationResult result = new DefaultInvocationResult();
 
-	try {
-	    int exitCode = executeCommandLine(cli, request);
+        try {
+            int exitCode = executeCommandLine(cli, request);
 
-	    result.setExitCode(exitCode);
-	} catch (CommandLineException e) {
-	    result.setExecutionException(e);
-	}
+            result.setExitCode(exitCode);
+        } catch (CommandLineException e) {
+            result.setExecutionException(e);
+        }
 
-	return result;
+        return result;
     }
 
     private int executeCommandLine(Commandline cli, InvocationRequest request) throws CommandLineException {
-	int result = Integer.MIN_VALUE;
+        int result = Integer.MIN_VALUE;
 
-	InputStream inputStream = request.getInputStream(this.inputStream);
-	InvocationOutputHandler outputHandler = request.getOutputHandler(this.outputHandler);
-	InvocationOutputHandler errorHandler = request.getErrorHandler(this.errorHandler);
+        InputStream inputStream = request.getInputStream(this.inputStream);
+        InvocationOutputHandler outputHandler = request.getOutputHandler(this.outputHandler);
+        InvocationOutputHandler errorHandler = request.getErrorHandler(this.errorHandler);
 
-	if (getLogger().isDebugEnabled()) {
-	    getLogger().debug("Executing: " + cli);
-	}
-	if (!request.isNonInteractive()) {
-	    if (inputStream == null) {
-		getLogger().warn("Subversion will be executed in interactive mode" + ", but no input stream has been configured for this SVNInvoker instance.");
+        if (getLogger().isDebugEnabled()) {
+            getLogger().debug("Executing: " + cli);
+        }
+        if (!request.isNonInteractive()) {
+            if (inputStream == null) {
+                getLogger().warn(
+                        "Subversion will be executed in interactive mode"
+                                + ", but no input stream has been configured for this SVNInvoker instance.");
 
-		result = CommandLineUtils.executeCommandLine(cli, outputHandler, errorHandler);
-	    } else {
-		result = CommandLineUtils.executeCommandLine(cli, inputStream, outputHandler, errorHandler);
-	    }
-	} else {
-	    if (inputStream != null) {
-		getLogger().info("Executing in batch mode. The configured input stream will be ignored.");
-	    }
+                result = CommandLineUtils.executeCommandLine(cli, outputHandler, errorHandler);
+            } else {
+                result = CommandLineUtils.executeCommandLine(cli, inputStream, outputHandler, errorHandler);
+            }
+        } else {
+            if (inputStream != null) {
+                getLogger().info("Executing in batch mode. The configured input stream will be ignored.");
+            }
 
-	    result = CommandLineUtils.executeCommandLine(cli, outputHandler, errorHandler);
-	}
+            result = CommandLineUtils.executeCommandLine(cli, outputHandler, errorHandler);
+        }
 
-	return result;
+        return result;
     }
 
     public InvokerLogger getLogger() {
-	return logger;
+        return logger;
     }
 
     public Invoker setLogger(InvokerLogger logger) {
-	this.logger = (logger != null) ? logger : DEFAULT_LOGGER;
-	return this;
+        this.logger = (logger != null) ? logger : DEFAULT_LOGGER;
+        return this;
     }
 
     public File getWorkingDirectory() {
-	return workingDirectory;
+        return workingDirectory;
     }
 
     public Invoker setWorkingDirectory(File workingDirectory) {
-	this.workingDirectory = workingDirectory;
-	return this;
+        this.workingDirectory = workingDirectory;
+        return this;
     }
 
     public Invoker setErrorHandler(InvocationOutputHandler errorHandler) {
-	this.errorHandler = errorHandler;
-	return this;
+        this.errorHandler = errorHandler;
+        return this;
     }
 
     public Invoker setInputStream(InputStream inputStream) {
-	this.inputStream = inputStream;
-	return this;
+        this.inputStream = inputStream;
+        return this;
     }
 
     public Invoker setOutputHandler(InvocationOutputHandler outputHandler) {
-	this.outputHandler = outputHandler;
-	return this;
+        this.outputHandler = outputHandler;
+        return this;
     }
 
 }

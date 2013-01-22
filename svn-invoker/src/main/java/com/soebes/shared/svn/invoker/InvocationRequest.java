@@ -34,7 +34,7 @@ public interface InvocationRequest {
      * The possible Subversion commands
      */
     public enum SVNCommands {
-	none, checkout, checkin, merge, list, info, resolve, update,
+        none, checkout, checkin, merge, list, info, resolve, update,
     }
 
     SVNCommands getCommand();

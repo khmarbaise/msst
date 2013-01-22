@@ -44,7 +44,7 @@ public class PrintStreamHandler implements InvocationOutputHandler {
      * Creates a new output handler that writes to {@link System#out}.
      */
     public PrintStreamHandler() {
-	this(System.out, false);
+        this(System.out, false);
     }
 
     /**
@@ -57,23 +57,23 @@ public class PrintStreamHandler implements InvocationOutputHandler {
      *            line.
      */
     public PrintStreamHandler(PrintStream out, boolean alwaysFlush) {
-	if (out == null) {
-	    throw new NullPointerException("missing output stream");
-	}
-	this.out = out;
-	this.alwaysFlush = alwaysFlush;
+        if (out == null) {
+            throw new NullPointerException("missing output stream");
+        }
+        this.out = out;
+        this.alwaysFlush = alwaysFlush;
     }
 
     public void consumeLine(String line) {
-	if (line == null) {
-	    out.println();
-	} else {
-	    out.println(line);
-	}
+        if (line == null) {
+            out.println();
+        } else {
+            out.println(line);
+        }
 
-	if (alwaysFlush) {
-	    out.flush();
-	}
+        if (alwaysFlush) {
+            out.flush();
+        }
     }
 
 }
