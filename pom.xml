@@ -113,6 +113,18 @@
   <modules>
     <module>cli-invoker</module>
     <module>svn-invoker</module>
+    <module>msst-cli</module>
   </modules>
+  
+  <dependencyManagement>
+    <!--  See https://github.com/khmarbaise/smpp/issues/1 -->
+    <dependencies>
+      <dependency>
+        <groupId>com.beust</groupId>
+        <artifactId>jcommander</artifactId>
+        <version>1.30</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 </project>
 

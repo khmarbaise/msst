@@ -166,3 +166,7 @@ svn-invoker
               May be move to a particular location
 
 
+   msst rebase BRANCH-NAME repo/module repo/module etc.
+
+          
+
