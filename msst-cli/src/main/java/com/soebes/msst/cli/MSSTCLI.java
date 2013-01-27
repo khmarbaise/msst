@@ -3,6 +3,9 @@ package com.soebes.msst.cli;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+
 /**
  * This will define the command line of MSST.
  *
@@ -40,9 +43,8 @@ public class MSSTCLI {
 
     
     public static void main(String [] args) {
-//	Injector.getInstance(MSSTCLI.class).run(args);
-	LOGGER.debug("Test message in debug mode.");
-        MSSTCLI cli = new MSSTCLI();
+	Injector injector = Guice.createInjector(new CLIModule());
+	MSSTCLI cli = injector.getInstance(MSSTCLI.class);
         cli.run(args);
         System.exit(cli.getReturnCode());
     }
