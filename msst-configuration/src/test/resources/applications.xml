@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<applications>
+  <apllication id="app1">
+    <repositories>
+      <repository id="rep1">
+        <modules>
+          <module id="m1" />
+          <module id="m3" />
+        </modules>
+      </repository>
+      <repository id="rep2">
+        <modules>
+          <module id="m1" />
+          <module id="m2" />
+          <module id="m3" />
+        </modules>
+      </repository>
+      <repository id="rep3">
+        <modules>
+          <module id="m1" />
+        </modules>
+      </repository>
+    </repositories>
+  </apllication>
+</applications>

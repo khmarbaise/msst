@@ -6,36 +6,37 @@ Maven Subversion Scripting Tool
 
   like:
 
-	xyz
- 	  +--- module-1
-	  +--- module-2
-	  +--- module-3
+    xyz
+      +--- module-1
+      +--- module-2
+      +--- module-3
+    
+    abc
+      +--- module-1
+      +--- module-2
+      +--- module-3
 
-	abc
-	  +--- module-1
-	  +--- module-2
-	  +--- module-3
 
-
-
-	<repositories>
-	  <repository>
-	    <id>xyz</id>
-	    <modules>
-	      <module>module-1</module>
-	      <module>module-2</module>
-	      <module>module-3</module>
-	    </modules>
-	  </repository>
-	  <repository>
-	    <id>abc</id>
-	    <modules>
-	      <module>module-1</module>
-	      <module>module-2</module>
-	      <module>module-3</module>
-	    </modules>
-	  </repository>
-	</repositories>
+    <repositories>
+      <repository id="rep1">
+        <modules>
+          <module id="m1" />
+          <module id="m3" />
+        </modules>
+      </repository>
+      <repository id="rep2">
+        <modules>
+          <module id="m1" />
+          <module id="m2" />
+          <module id="m3" />
+        </modules>
+      </repository>
+      <repository id="rep3">
+        <modules>
+          <module id="m1" />
+        </modules>
+      </repository>
+    </repositories>
 
 
   Might be simpler in [yaml](http://yaml.org) format:
@@ -59,60 +60,74 @@ Simpler Usage on a "application" level.
 
   Define an application like app1
 
-  app1
-     +-- xyz
-          +--- module-1
-          +--- module-2
-     +-- abc
-          +--- module-3
+      app1
+         +-- xyz
+              +--- module-1
+              +--- module-2
+         +-- abc
+              +--- module-3
 
 
-	<applications>
-	  <repositories>
-	    <repository>
-	      <id>xyz</id>
-	      <modules>
-	        <module>module-1</module>
-	        <module>module-2</module>
-	      </modules>
-	    </repository>
-	    <repository>
-	      <id>abc</id>
-	      <modules>
-	        <module>module-3</module>
-	      </modules>
-	    </repository>
-	  </repositories>
-	</applications>
+    <applications>
+      <apllication id="app1">
+        <repositories>
+          <repository id="rep1">
+            <modules>
+              <module id="m1" />
+              <module id="m3" />
+            </modules>
+          </repository>
+          <repository id="rep2">
+            <modules>
+              <module id="m1" />
+              <module id="m2" />
+              <module id="m3" />
+            </modules>
+          </repository>
+          <repository id="rep3">
+            <modules>
+              <module id="m1" />
+            </modules>
+          </repository>
+        </repositories>
+      </apllication>
+    </applications>
 
 
   what about yaml format might be simpler to handle in particular for human beings.
 
 
-	applications:
-		repositories:
-			repository:
-				id: xyz
-				modules:
-					module: module-1
-					module: module-2
-					module: module-3
-			repository:
-				id: abc
-				modules:
-					module: module-1
-					module: module-2
-					module: module-3
-
+    applications:
+        application:
+            id: app1
+            repositories:
+                repository:
+                	id: xyz
+                	modules:
+                		module: module-1
+                		module: module-2
+                		module: module-3
+                repository:
+                	id: abc
+                	modules:
+                		module: module-1
+                		module: module-2
+                		module: module-3
 
 
  
 - Basic Command
 
+    msst branch --branch BRANCH-NAME applicationNames
 
-  msst branching --branch BRANCH-NAME --branch-version=2.3-SNAPSHOT repo/module repo/module etc.
 
-  msst branching --branch BRANCH-NAME --branch-version=2.3-SNAPSHOT @repository-module.lst
+    msst branch --branch BRANCH-NAME --modules-list=module-1,module-2 (not unique?)
+
+
+    msst branch --branch BRANCH-NAME --branch-version=2.3-SNAPSHOT repo/module repo/module etc.
+
+
+    msst branch --branch BRANCH-NAME --branch-version=2.3-SNAPSHOT @repository-module.lst
 
 
 Execution Block for a single module must be repeated for every module:

@@ -114,6 +114,7 @@
     <module>cli-invoker</module>
     <module>svn-invoker</module>
     <module>msst-cli</module>
+    <module>msst-configuration</module>
   </modules>
   
   <dependencyManagement>
