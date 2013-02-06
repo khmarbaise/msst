@@ -21,6 +21,7 @@ package com.soebes.shared.svn.invoker;
 
 import com.soebes.shared.svn.invoker.InvocationRequest.SVNCommands;
 
+import org.codehaus.plexus.util.Os;
 import org.codehaus.plexus.util.cli.Commandline;
 
 import java.io.File;

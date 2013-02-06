@@ -100,6 +100,27 @@ public class DefaultInvokerTest extends TestBase {
         assertThat(result.getExitCode()).isNotEqualTo(0);
     }
 
+    @Test
+    public void testSvnCommandCat() throws IOException, MojoExecutionException, SubversionInvocationException {
+        File basedir = getTargetDirFile();
+
+        invoker = newInvoker();
+
+        request = new DefaultInvocationRequest();
+        request.setBaseDirectory(basedir);
+
+        FileLogger flog = setupLogger(basedir, "result.out");
+        request.setErrorHandler(flog);
+        request.setOutputHandler(flog);
+        
+        request.setCommand(SVNCommands.cat);
+        request.setParameters(Collections.singletonList("https://svn.int.hrs.com/servicelayer/commons/branches/4.0/pom.xml"));
+        
+        InvocationResult result = invoker.execute(request);
+
+        assertThat(result.getExitCode()).isEqualTo(0);
+    }
+
     private FileLogger setupLogger(File basedir, String logFile) throws MojoExecutionException, IOException {
         return new FileLogger(new File(basedir, logFile));
     }
