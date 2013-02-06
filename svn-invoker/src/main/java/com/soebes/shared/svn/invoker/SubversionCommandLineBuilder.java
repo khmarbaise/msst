@@ -120,6 +120,11 @@ public class SubversionCommandLineBuilder {
 
     protected File findSVNExecutable() throws CommandLineConfigurationException {
         String executableName = "svn";
+
+        if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+            executableName = "svn.exe";
+        }
+
         File fullyQualifiedExecutable = findExecutableOnPath(executableName);
 
         if (fullyQualifiedExecutable != null) {
