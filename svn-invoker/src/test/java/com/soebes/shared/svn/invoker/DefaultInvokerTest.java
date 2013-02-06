@@ -32,15 +32,6 @@ import org.codehaus.plexus.util.StringUtils;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import com.soebes.shared.svn.invoker.DefaultInvocationRequest;
-import com.soebes.shared.svn.invoker.DefaultInvoker;
-import com.soebes.shared.svn.invoker.FileLogger;
-import com.soebes.shared.svn.invoker.InvocationRequest;
-import com.soebes.shared.svn.invoker.InvocationResult;
-import com.soebes.shared.svn.invoker.Invoker;
-import com.soebes.shared.svn.invoker.InvokerLogger;
-import com.soebes.shared.svn.invoker.SubversionInvocationException;
-import com.soebes.shared.svn.invoker.SystemOutLogger;
 import com.soebes.shared.svn.invoker.InvocationRequest.SVNCommands;
 
 public class DefaultInvokerTest extends TestBase {

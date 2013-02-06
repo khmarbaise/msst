@@ -19,13 +19,13 @@ package com.soebes.shared.svn.invoker;
  * under the License.
  */
 
-import com.soebes.shared.svn.invoker.InvocationRequest.SVNCommands;
+import java.io.File;
+import java.io.IOException;
 
 import org.codehaus.plexus.util.Os;
 import org.codehaus.plexus.util.cli.Commandline;
 
-import java.io.File;
-import java.io.IOException;
+import com.soebes.shared.svn.invoker.InvocationRequest.SVNCommands;
 
 /**
  */
